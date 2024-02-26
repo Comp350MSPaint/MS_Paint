@@ -1,10 +1,9 @@
 # MS_Paint
 
-Kohei
+Section By: Sammy Seligman
 
+Kohei
 
 Clark
 
 Noah Soriano
-
-
