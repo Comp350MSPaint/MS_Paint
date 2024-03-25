@@ -30,7 +30,7 @@ fun SecondRow(){
         modifier = Modifier
             .fillMaxWidth()
             .height(100.dp)
-            .background(Color.Gray)
+            .background(Color(0xFFc8c8c8))
             .padding(0.dp)
     ) {
         val reusableModifier = Modifier

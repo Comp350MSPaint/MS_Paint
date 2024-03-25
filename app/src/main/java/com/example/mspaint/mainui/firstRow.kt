@@ -33,8 +33,8 @@ fun firstRow(): Boolean {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(75.dp)
-            .background(Color.Gray)
+            .height(100.dp)
+            .background(Color(0xFFc8c8c8))
     ) {
         Box(
             modifier = Modifier
