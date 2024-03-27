@@ -1,4 +1,4 @@
-package com.example.mspaint.attributes
+package com.example.mspaint.canvasObjectData
 
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
