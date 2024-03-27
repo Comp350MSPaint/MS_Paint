@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.mspaint.ui.theme.PureBlack
 
 @Composable
 fun MainScreen() {
@@ -31,7 +30,7 @@ fun MainScreen() {
             // the toolbar
             Box(
                 modifier = Modifier
-                    .border(width =2.dp, color = PureBlack, shape = RectangleShape)
+                    .border(width =2.dp, color = Color.Black, shape = RectangleShape)
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth()
                     .padding(5.dp)

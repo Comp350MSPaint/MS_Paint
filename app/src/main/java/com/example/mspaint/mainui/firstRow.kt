@@ -26,7 +26,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mspaint.R
 import com.example.mspaint.tools.pencil
-import com.example.mspaint.ui.theme.Grey
 
 @Composable
 fun firstRow(): Boolean {
@@ -35,7 +34,7 @@ fun firstRow(): Boolean {
         modifier = Modifier
             .fillMaxWidth()
             .height(100.dp)
-            .background(Grey)
+            .background(Color(0xFFc8c8c8))
     ) {
         Box(
             modifier = Modifier

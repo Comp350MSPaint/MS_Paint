@@ -10,7 +10,8 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.mspaint.canvasObjectData.pencilWidth
+import com.example.mspaint.attributes.pencilWidth
+import com.example.mspaint.tools.pencil
 
 @Composable
 fun SliderFunc() {
