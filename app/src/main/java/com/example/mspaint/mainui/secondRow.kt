@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import com.example.mspaint.R
 import com.example.mspaint.tools.eraser
 import com.example.mspaint.tools.pencil
-import com.example.mspaint.ui.theme.Grey
 
 @Composable
 fun SecondRow(){
@@ -31,7 +30,7 @@ fun SecondRow(){
         modifier = Modifier
             .fillMaxWidth()
             .height(100.dp)
-            .background(Grey)
+            .background(Color(0xFFc8c8c8))
             .padding(0.dp)
     ) {
         val reusableModifier = Modifier
