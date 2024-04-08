@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 
 @Composable
@@ -26,8 +27,9 @@ fun DrawScreen() {
     Canvas(
 // sets up the canvas
         modifier = Modifier
-            .size(width = 400.dp, height = 600.dp)
-            .background(color = Color.Magenta) // Set the eraser color same to this and set the background color by "system setting".
+            //.fillMaxSize()
+            .size(width = 350.dp, height = 500.dp)
+            .background(color = Color.White) // Set the eraser color same to this and set the background color by "system setting".
             .pointerInput(true) {
                 detectDragGestures { change, dragAmount ->
                     change.consume()
