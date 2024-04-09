@@ -51,6 +51,7 @@ fun MainScreen() {
                                              dragAmount ->
                             change.consume()
 
+
                             val line = Line(
                                 start = change.position - dragAmount,
                                 end = change.position
@@ -110,6 +111,19 @@ fun MainScreen() {
     }
 }
 
+fun onTouch(MotionEvent event): Boolean {
+    switch (even.getAction()) {
+        case MotionEvent.ACTION_DOWN:
+                break;
+        case MotionEven.ACTION_MOVE:
+                break;
+        case MotionEvent.ACTION_UP:
+                break;
+        default:
+            return false;
+    }
+    return true;
+}
 
 @Preview
 @Composable
