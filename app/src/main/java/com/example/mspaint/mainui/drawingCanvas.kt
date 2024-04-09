@@ -1,6 +1,7 @@
 package com.example.mspaint.mainui
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -10,6 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.input.pointer.pointerInput
 import com.example.mspaint.canvasObjectData.Line
+import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
 
 @Composable
 fun DrawScreen() {
@@ -19,7 +27,9 @@ fun DrawScreen() {
     Canvas(
 // sets up the canvas
         modifier = Modifier
-            .fillMaxSize()
+            //.fillMaxSize()
+            .size(width = 350.dp, height = 500.dp)
+            .background(color = Color.White) // Set the eraser color same to this and set the background color by "system setting".
             .pointerInput(true) {
                 detectDragGestures { change, dragAmount ->
                     change.consume()

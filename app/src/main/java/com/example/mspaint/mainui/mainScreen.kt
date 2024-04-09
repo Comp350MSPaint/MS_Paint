@@ -1,11 +1,15 @@
 package com.example.mspaint.mainui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,14 +28,32 @@ fun MainScreen() {
     ) {
         Box(
             modifier = Modifier
+                .fillMaxSize()
+                .background(color = Color.Gray)
 
         ) {
             //the actual canvas
-            DrawScreen()
+            Box(
+                modifier = Modifier
+                    .border(width = 2.dp, color = PureBlack, shape = RectangleShape)
+                    .size(width = 400.dp, height = 645.dp)//The size of this box add the size of tool bar fill the whole screen,
+                    .align(Alignment.TopCenter)
+                    .padding(5.dp)
+            ) {
+                Column(modifier = Modifier
+                    .align(Alignment.Center)
+                ) {
+                    Row(modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                    ) {
+                        DrawScreen()
+                    }
+                }
+            }
             // the toolbar
             Box(
                 modifier = Modifier
-                    .border(width =2.dp, color = PureBlack, shape = RectangleShape)
+                    .border(width = 2.dp, color = PureBlack, shape = RectangleShape)
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth()
                     .padding(5.dp)
@@ -48,6 +70,7 @@ fun MainScreen() {
                     }
                 }
             }
+
         }
     }
 }
