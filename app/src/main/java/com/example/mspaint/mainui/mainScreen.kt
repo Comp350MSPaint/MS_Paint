@@ -76,39 +76,40 @@ fun MainScreen() {
                     Row(modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                     ) {
-                        DrawScreen()
-                    }
-                }
-            }
-            Canvas(
-                // sets up the canvas
-                modifier = Modifier
-                    .fillMaxSize()
-                    .pointerInput(true) {
-                        detectDragGestures { change,
-                                             dragAmount ->
-                            change.consume()
+                        Canvas(
+                                // sets up the canvas
+                                modifier = Modifier
+                                    // .fillMaxSize()
+                                    .size(width = 350.dp, height = 500.dp)
+                                    .background(color = Color.White)
+                                    .pointerInput(true) {
+                                        detectDragGestures { change,
+                                                             dragAmount ->
+                                            change.consume()
 
-
-                            val line = Line(
-                                start = change.position - dragAmount,
-                                end = change.position
-                            )
-                            lines.add(line)
+                                            val line = Line(
+                                                start = change.position - dragAmount,
+                                                end = change.position
+                                            )
+                                            lines.add(line)
+                                        }
+                                    }
+                                ) // creates the actual drawing. drawLine function is a part of Jetpack Compose
+                        {
+                            lines.forEach { line ->
+                                drawLine(
+                                    color = line.color,
+                                    start = line.start,
+                                    end = line.end,
+                                    strokeWidth = line.strokeWidth.toPx(),
+                                    cap = StrokeCap.Round
+                                )
+                            }
                         }
                     }
-            ) // creates the actual drawing. drawLine function is a part of Jetpack Compose
-            {
-                lines.forEach { line ->
-                    drawLine(
-                        color = line.color,
-                        start = line.start,
-                        end = line.end,
-                        strokeWidth = line.strokeWidth.toPx(),
-                        cap = StrokeCap.Round
-                    )
                 }
             }
+
 
             // the toolbar
             Box(
