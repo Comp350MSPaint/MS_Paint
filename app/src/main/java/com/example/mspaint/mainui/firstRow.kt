@@ -29,7 +29,9 @@ import com.example.mspaint.tools.pencil
 import com.example.mspaint.ui.theme.Grey
 
 @Composable
-fun firstRow(): Boolean {
+fun firstRow(
+    showSlider: Boolean
+): Boolean {
     var hidden by remember{ mutableStateOf(false) }
     Row(
         modifier = Modifier
@@ -68,7 +70,12 @@ fun firstRow(): Boolean {
                 .weight(5f)
                 .align(Alignment.CenterVertically)
         ) {
-            SliderFunc()
+            if (showSlider) {
+                SliderFunc()
+            }
+            else {
+                PalletFunc()
+            }
         }
         Box(
             modifier = Modifier

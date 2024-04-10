@@ -10,8 +10,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,6 +36,13 @@ fun MainScreen() {
     val undoneLines = remember {
         mutableStateListOf<Line>()
     }
+
+    // var sliderPosition by remember { mutableFloatStateOf(0f) }
+
+    var showSlider by remember { mutableStateOf(false) }
+
+    // Define a callback to toggle the slider visibility
+    val onToggleSlider: (Boolean) -> Unit = { showSlider = it }
 
     Column(
         modifier = Modifier
@@ -84,7 +95,7 @@ fun MainScreen() {
                 Column {
                     var hide: Boolean = true
                     // first row
-                    hide = firstRow()
+                    hide = firstRow(showSlider)
 
                     // second row
                     if (!hide) {
@@ -102,7 +113,9 @@ fun MainScreen() {
                                     undoneLines.remove(undoneLine)
                                     lines.add(undoneLine)
                                 }
-                            }
+                            },
+                            showSlider,
+                            onToggleSlider
                         )
                     }
                 }

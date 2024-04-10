@@ -13,9 +13,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.mspaint.canvasObjectData.pencilWidth
 
 @Composable
-fun SliderFunc() {
+fun SliderFunc(
+) {
     var sliderPosition by remember { mutableFloatStateOf(0f) }
-    pencilWidth = 2f
+    // pencilWidth = 4f
 
     Slider(
         value = sliderPosition,
@@ -26,7 +27,7 @@ fun SliderFunc() {
             inactiveTrackColor = MaterialTheme.colorScheme.secondaryContainer,
         ),
         steps = 5,
-        valueRange = 2f..20f,
+        valueRange = 4f..20f,
 
         )
     Text(
