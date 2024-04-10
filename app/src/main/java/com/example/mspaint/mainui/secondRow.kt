@@ -26,7 +26,12 @@ import com.example.mspaint.tools.pencil
 import com.example.mspaint.ui.theme.Grey
 
 @Composable
-fun SecondRow(){
+fun SecondRow(
+    undo: ()-> Unit,
+    redo: ()-> Unit,
+    showSlider: Boolean,
+    onToggleSlider: (Boolean) -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -43,7 +48,7 @@ fun SecondRow(){
             modifier = reusableModifier
         ) {
             Button(
-                onClick = { pencil() },
+                onClick = { undo() },
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
@@ -58,7 +63,7 @@ fun SecondRow(){
             modifier = reusableModifier
         ) {
             Button(
-                onClick = { pencil() },
+                onClick = { redo() },
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
@@ -73,7 +78,7 @@ fun SecondRow(){
             modifier = reusableModifier
         ) {
             Button(
-                onClick = { pencil() },
+                onClick = { onToggleSlider(!showSlider)},
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
