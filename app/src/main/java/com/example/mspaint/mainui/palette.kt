@@ -15,7 +15,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
+import com.example.mspaint.canvasObjectData.hue
 import com.example.mspaint.tools.pencil
+import com.example.mspaint.ui.theme.Aqua
+import com.example.mspaint.ui.theme.Black
+import com.example.mspaint.ui.theme.Blue
+import com.example.mspaint.ui.theme.Green
+import com.example.mspaint.ui.theme.Magenta
+import com.example.mspaint.ui.theme.Orange
+import com.example.mspaint.ui.theme.Purple
+import com.example.mspaint.ui.theme.Red
+import com.example.mspaint.ui.theme.White
+import com.example.mspaint.ui.theme.Yellow
 
 @Composable
 fun PalletFunc() {
@@ -35,9 +46,9 @@ fun PalletFunc() {
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { pencil() },
+                    onClick = { hue = Red },
                     shape = RectangleShape,
-                    colors = ButtonDefaults.buttonColors(Color.Red),
+                    colors = ButtonDefaults.buttonColors(Red),
                     modifier = Modifier
                         .size(width = 47.dp, height = 50.dp)
                 ) {
@@ -49,9 +60,9 @@ fun PalletFunc() {
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { pencil() },
+                    onClick = { hue = Yellow},
                     shape = RectangleShape,
-                    colors = ButtonDefaults.buttonColors(Color(0xFFFFFF00)),
+                    colors = ButtonDefaults.buttonColors(Yellow),
                     modifier = Modifier
                         .size(width = 47.dp, height = 50.dp)
                 ) {
@@ -63,9 +74,9 @@ fun PalletFunc() {
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { pencil() },
+                    onClick = { hue = Orange },
                     shape = RectangleShape,
-                    colors = ButtonDefaults.buttonColors(Color(0xFFFFA500)),
+                    colors = ButtonDefaults.buttonColors(Orange),
                     modifier = Modifier
                         .size(width = 47.dp, height = 50.dp)
                 ) {
@@ -77,9 +88,9 @@ fun PalletFunc() {
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { pencil() },
+                    onClick = { hue = Green },
                     shape = RectangleShape,
-                    colors = ButtonDefaults.buttonColors(Color(0xFF00FF00)),
+                    colors = ButtonDefaults.buttonColors(Green),
                     modifier = Modifier
                         .size(width = 47.dp, height = 50.dp)
                 ) {
@@ -91,9 +102,9 @@ fun PalletFunc() {
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { pencil() },
+                    onClick = { hue = Aqua },
                     shape = RectangleShape,
-                    colors = ButtonDefaults.buttonColors(Color.Cyan),
+                    colors = ButtonDefaults.buttonColors(Aqua),
                     modifier = Modifier
                         .size(width = 47.dp, height = 50.dp)
                 ) {
@@ -111,9 +122,9 @@ fun PalletFunc() {
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { pencil() },
+                    onClick = { hue = White },
                     shape = RectangleShape,
-                    colors = ButtonDefaults.buttonColors(Color.White),
+                    colors = ButtonDefaults.buttonColors(White),
                     modifier = Modifier
                         .size(width = 47.dp, height = 50.dp)
                 ) {
@@ -125,9 +136,9 @@ fun PalletFunc() {
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { pencil() },
+                    onClick = { hue = Black },
                     shape = RectangleShape,
-                    colors = ButtonDefaults.buttonColors(Color.Black),
+                    colors = ButtonDefaults.buttonColors(Black),
                     modifier = Modifier
                         .size(width = 47.dp, height = 50.dp)
                 ) {
@@ -139,9 +150,9 @@ fun PalletFunc() {
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { pencil() },
+                    onClick = { hue = Purple },
                     shape = RectangleShape,
-                    colors = ButtonDefaults.buttonColors(Color(0xFF800080)),
+                    colors = ButtonDefaults.buttonColors(Purple),
                     modifier = Modifier
                         .size(width = 47.dp, height = 50.dp)
                 ) {
@@ -153,9 +164,9 @@ fun PalletFunc() {
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { pencil() },
+                    onClick = { hue = Magenta },
                     shape = RectangleShape,
-                    colors = ButtonDefaults.buttonColors(Color(0xFFE6E6FA)),
+                    colors = ButtonDefaults.buttonColors(Magenta),
                     modifier = Modifier
                         .size(width = 47.dp, height = 50.dp)
                 ) {
@@ -167,9 +178,9 @@ fun PalletFunc() {
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { pencil() },
+                    onClick = { hue = Blue },
                     shape = RectangleShape,
-                    colors = ButtonDefaults.buttonColors(Color.Blue),
+                    colors = ButtonDefaults.buttonColors(Blue),
                     modifier = Modifier
                         .size(width = 47.dp, height = 50.dp)
                 ) {
