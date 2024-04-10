@@ -30,7 +30,8 @@ import com.example.mspaint.ui.theme.Grey
 
 @Composable
 fun firstRow(
-    showSlider: Boolean
+    showSlider: Boolean,
+    slider: @Composable () -> Unit
 ): Boolean {
     var hidden by remember{ mutableStateOf(false) }
     Row(
@@ -71,7 +72,7 @@ fun firstRow(
                 .align(Alignment.CenterVertically)
         ) {
             if (showSlider) {
-                SliderFunc()
+                slider()
             }
             else {
                 PalletFunc()

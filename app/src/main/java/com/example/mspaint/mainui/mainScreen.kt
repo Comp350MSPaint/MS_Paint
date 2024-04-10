@@ -9,6 +9,10 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -25,6 +29,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mspaint.canvasObjectData.Line
+import com.example.mspaint.canvasObjectData.pencilWidth
 import com.example.mspaint.ui.theme.PureBlack
 
 @Composable
@@ -37,7 +42,7 @@ fun MainScreen() {
         mutableStateListOf<Line>()
     }
 
-    // var sliderPosition by remember { mutableFloatStateOf(0f) }
+    var sliderPosition by remember { mutableFloatStateOf(0f) }
 
     var showSlider by remember { mutableStateOf(false) }
 
@@ -95,7 +100,28 @@ fun MainScreen() {
                 Column {
                     var hide: Boolean = true
                     // first row
-                    hide = firstRow(showSlider)
+                    hide = firstRow(
+                        showSlider,
+                        slider = {
+                            Slider(
+                                value = sliderPosition,
+                                onValueChange = { sliderPosition = it },
+                                colors = SliderDefaults.colors(
+                                    thumbColor = MaterialTheme.colorScheme.secondary,
+                                    activeTrackColor = MaterialTheme.colorScheme.secondary,
+                                    inactiveTrackColor = MaterialTheme.colorScheme.secondaryContainer,
+                                ),
+                                steps = 5,
+                                valueRange = 4f..20f,
+
+                                )
+                            Text(
+                                text = sliderPosition.toString()
+
+                            )
+                            pencilWidth = sliderPosition
+                        }
+                    )
 
                     // second row
                     if (!hide) {
