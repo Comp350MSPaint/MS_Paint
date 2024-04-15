@@ -37,7 +37,6 @@ import com.example.mspaint.ui.theme.PureBlack
 
 @Composable
 fun MainScreen() {
-    // list of lines
     val lines = remember {
         mutableStateListOf<Line>()
     }
@@ -46,10 +45,7 @@ fun MainScreen() {
     }
 
     var sliderPosition by remember { mutableFloatStateOf(0f) }
-
     var showSlider by remember { mutableStateOf(false) }
-
-    // Define a callback to toggle the slider visibility
     val onToggleSlider: (Boolean) -> Unit = { showSlider = it }
 
     Column(
@@ -77,9 +73,7 @@ fun MainScreen() {
                         .align(Alignment.CenterHorizontally)
                     ) {
                         Canvas(
-                                // sets up the canvas
                                 modifier = Modifier
-                                    // .fillMaxSize()
                                     .size(width = 350.dp, height = 500.dp)
                                     .background(color = Color.White)
                                     .pointerInput(true) {
@@ -94,7 +88,7 @@ fun MainScreen() {
                                             lines.add(line)
                                         }
                                     }
-                                ) // creates the actual drawing. drawLine function is a part of Jetpack Compose
+                                )
                         {
                             lines.forEach { line ->
                                 drawLine(
@@ -110,7 +104,6 @@ fun MainScreen() {
                 }
             }
 
-
             // the toolbar
             Box(
                 modifier = Modifier
@@ -122,7 +115,6 @@ fun MainScreen() {
                 // rows
                 Column {
                     var hide: Boolean = true
-                    // first row
                     hide = firstRow(
                         showSlider,
                         slider = {
@@ -146,7 +138,6 @@ fun MainScreen() {
                         }
                     )
 
-                    // second row
                     if (!hide) {
                         SecondRow(
                             undo = {
