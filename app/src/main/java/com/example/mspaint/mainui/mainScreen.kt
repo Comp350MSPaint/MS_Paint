@@ -26,23 +26,26 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.mspaint.canvasObjectData.Line
+import com.example.mspaint.canvasObjectData.PathProperties
+import com.example.mspaint.canvasObjectData.hue
 import com.example.mspaint.canvasObjectData.pencilWidth
 import com.example.mspaint.ui.theme.PureBlack
 
 @Composable
 fun MainScreen() {
     // list of lines
-    val lines = remember {
-        mutableStateListOf<Line>()
+    val paths = remember {
+        mutableStateListOf<Pair<Path,PathProperties>>()
     }
-    val undoneLines = remember {
-        mutableStateListOf<Line>()
+    val undonePaths = remember {
+        mutableStateListOf<Pair<Path,PathProperties>>()
     }
 
     var sliderPosition by remember { mutableFloatStateOf(0f) }
@@ -76,33 +79,49 @@ fun MainScreen() {
                     Row(modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                     ) {
+                        var currentPath = Path()
+                        var currentPathProperties = PathProperties(
+                            color = hue,
+                            strokeWidth = pencilWidth,
+                            strokeCap = StrokeCap.Round
+                        )
                         Canvas(
                                 // sets up the canvas
                                 modifier = Modifier
-                                    // .fillMaxSize()
                                     .size(width = 350.dp, height = 500.dp)
                                     .background(color = Color.White)
                                     .pointerInput(true) {
-                                        detectDragGestures { change,
-                                                             dragAmount ->
-                                            change.consume()
+                                        detectDragGestures(
+                                            onDrag = { change, dragAmount ->
+                                                change.consume()
 
-                                            val line = Line(
-                                                start = change.position - dragAmount,
-                                                end = change.position
-                                            )
-                                            lines.add(line)
-                                        }
+                                                currentPath.lineTo(change.position.x, change.position.y)
+                                            },
+                                            onDragStart = {
+                                                currentPath = Path().apply {
+                                                    moveTo(it.x, it.y)
+                                                }
+                                            },
+                                            onDragEnd = {
+                                                paths.add(Pair(currentPath, currentPathProperties))
+                                            }
+                                        )
+
                                     }
                                 ) // creates the actual drawing. drawLine function is a part of Jetpack Compose
                         {
-                            lines.forEach { line ->
-                                drawLine(
-                                    color = line.color,
-                                    start = line.start,
-                                    end = line.end,
-                                    strokeWidth = line.strokeWidth.toPx(),
-                                    cap = StrokeCap.Round
+                            paths.forEach {
+                                val path = it.first
+                                val property = it.second
+
+                                drawPath(
+                                    color = hue,
+                                    path = path,
+                                    style = Stroke(
+                                        width = property.strokeWidth,
+                                        cap = property.strokeCap,
+                                        join = property.strokeJoin
+                                    )
                                 )
                             }
                         }
@@ -150,17 +169,17 @@ fun MainScreen() {
                     if (!hide) {
                         SecondRow(
                             undo = {
-                                if (lines.isNotEmpty()) {
-                                    val lastLine = lines.last()
-                                    lines.remove(lastLine)
-                                    undoneLines.add(lastLine)
+                                if (paths.isNotEmpty()) {
+                                    val lastLine = paths.last()
+                                    paths.remove(lastLine)
+                                    undonePaths.add(lastLine)
                                 }
                             },
                             redo = {
-                                if (undoneLines.isNotEmpty()) {
-                                    val undoneLine = undoneLines.last()
-                                    undoneLines.remove(undoneLine)
-                                    lines.add(undoneLine)
+                                if (undonePaths.isNotEmpty()) {
+                                    val undoneLine = undonePaths.last()
+                                    undonePaths.remove(undoneLine)
+                                    paths.add(undoneLine)
                                 }
                             },
                             showSlider,
