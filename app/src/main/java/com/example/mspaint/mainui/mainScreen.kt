@@ -111,11 +111,9 @@ fun MainScreen() {
                                 ) // creates the actual drawing. drawLine function is a part of Jetpack Compose
                         {
                             paths.forEach {
-                                val path = it.first
-                                val property = it.second
-
+                                (path,property)->
                                 drawPath(
-                                    color = hue,
+                                    color = property.color,
                                     path = path,
                                     style = Stroke(
                                         width = property.strokeWidth,
@@ -124,6 +122,7 @@ fun MainScreen() {
                                     )
                                 )
                             }
+
                         }
                     }
                 }
