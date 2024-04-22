@@ -34,11 +34,14 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mspaint.canvasObjectData.Line
+import com.example.mspaint.canvasObjectData.hue
 import com.example.mspaint.canvasObjectData.pencilWidth
 import com.example.mspaint.ui.theme.PureBlack
 
 @Composable
 fun MainScreen() {
+
+
     // Number of strokes
     var strokeCount by remember { mutableStateOf(0) }
     var tickCount by remember { mutableStateOf(0) }
@@ -58,11 +61,15 @@ fun MainScreen() {
     // Define a callback to toggle the slider visibility
     val onToggleSlider: (Boolean) -> Unit = { showSlider = it }
     var isBucketToolSelected by remember { mutableStateOf(false) }
+    var isPencilToolSelected by remember { mutableStateOf(false) }
+
     var tapX by remember { mutableStateOf(0f) }
     var tapY by remember { mutableStateOf(0f) }
 
     var tapX2 by remember { mutableStateOf(0f) }
     var tapY2 by remember { mutableStateOf(0f) }
+
+
     Column(
         modifier = Modifier
             .fillMaxHeight()
@@ -103,20 +110,25 @@ fun MainScreen() {
                                     detectTapGestures(
                                         onPress = { it ->
                                             if (tapX == 0f && tapY == 0f) {
-                                                tapX = it.x
-                                                tapY = it.y
+                                                if (isBucketToolSelected) {
+                                                    tapX = it.x
+                                                    tapY = it.y
+                                                }
                                             } else {
-                                                tapX2 = it.x
-                                                tapY2 = it.y
-                                                if (!isBucketToolSelected) {
+                                                if (isBucketToolSelected) {
+                                                    tapX2 = it.x
+                                                    tapY2 = it.y
+                                                }
+                                                if (isBucketToolSelected) {
                                                     lines.add(
                                                         Line(
                                                             start = Offset(tapX, tapY),
                                                             end = Offset(tapX2, tapY2),
-                                                            color = Color.Black
+                                                            color = hue
                                                         )
                                                     )
                                                 }
+
                                                 tapX = 0f
                                                 tapY = 0f
                                             }
@@ -124,22 +136,22 @@ fun MainScreen() {
                                     )}
 
                                 .pointerInput(true) {
-                                        detectDragGestures(
-                                            onDragEnd = {
-                                                strokeCount++ // Increment stroke count when drag gesture ends
-                                            }
-                                        ) { change,
-                                            dragAmount ->
-                                            change.consume()
+                                    detectDragGestures(
+                                        onDragEnd = {
+                                            strokeCount++ // Increment stroke count when drag gesture ends
+                                        }
+                                    ) { change,
+                                        dragAmount ->
+                                        change.consume()
 
-                                            val line = Line(
-                                                start = change.position - dragAmount,
-                                                end = change.position
-                                            )
-                                            if(isBucketToolSelected) {
-                                                lines.add(line)
-                                            }
-                                            tickCount++
+                                        val line = Line(
+                                            start = change.position - dragAmount,
+                                            end = change.position
+                                        )
+                                        if(isPencilToolSelected) {
+                                            lines.add(line)
+                                        }
+                                        tickCount++
 
                                     }}
                         ) { // Creates the actual drawing. drawLine function is a part of Jetpack Compose
@@ -216,7 +228,8 @@ fun MainScreen() {
                             },
                             showSlider,
                             onToggleSlider,
-                            onBucketToolClick = { isBucketToolSelected = !isBucketToolSelected }
+                            onBucketToolClick = { isBucketToolSelected = !isBucketToolSelected },
+                            onPencilToolClick = {isPencilToolSelected = !isPencilToolSelected}
 
                         )
                     }
