@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.RectangleShape
@@ -36,7 +38,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.room.util.copy
 import com.example.mspaint.R
 import com.example.mspaint.canvasObjectData.PathProperties
 import com.example.mspaint.canvasObjectData.hue
@@ -63,8 +64,14 @@ fun MainScreen() {
 
     // Define a callback to toggle the slider visibility
     val onToggleSlider: (Boolean) -> Unit = { showSlider = it }
-
+    var isBucketToolSelected by remember { mutableStateOf(false) }
+    var isPencilToolSelected by remember { mutableStateOf(false) }
     var hide: Boolean = true
+    var tapX by remember { mutableStateOf(0f) }
+    var tapY by remember { mutableStateOf(0f) }
+
+    var tapX2 by remember { mutableStateOf(0f) }
+    var tapY2 by remember { mutableStateOf(0f) }
     Column(
         modifier = Modifier
             .fillMaxHeight()
@@ -105,7 +112,9 @@ fun MainScreen() {
                                     detectDragGestures(
                                         onDrag = { change, dragAmount ->
                                             change.consume()
+                                            if(!isBucketToolSelected){
                                             currentPath.lineTo(change.position.x, change.position.y)
+                                            }
                                             // Update the canvas in real-time
                                             tempPath.add(Pair(currentPath, currentPathProperties))
                                         },
@@ -122,6 +131,37 @@ fun MainScreen() {
                                             finalProperty = PathProperties(currentPathProperties)
                                             paths.add(Pair(currentPath, finalProperty))
                                             tempPath.clear()
+                                        }
+                                    )
+                                }
+                                .pointerInput(true) {
+                                    detectTapGestures(
+                                        onPress = { it ->
+                                            if (tapX == 0f && tapY == 0f) {
+                                                if (isBucketToolSelected) {
+                                                    tapX = it.x
+                                                    tapY = it.y
+                                                }
+                                            } else {
+                                                if (isBucketToolSelected) {
+                                                    tapX2 = it.x
+                                                    tapY2 = it.y
+                                                }
+                                                if (isBucketToolSelected) {
+                                                    paths.add(
+                                                        Pair(
+                                                            Path().apply {
+                                                                moveTo(tapX, tapY)
+                                                                lineTo(tapX2, tapY2)
+                                                            },
+                                                            PathProperties(
+                                                                color = hue,
+                                                                strokeWidth = sliderPosition
+                                                            )))                                                }
+
+                                                tapX = 0f
+                                                tapY = 0f
+                                            }
                                         }
                                     )
                                 }
@@ -211,7 +251,9 @@ fun MainScreen() {
                                 }
                             },
                             showSlider,
-                            onToggleSlider
+                            onToggleSlider,
+                            onBucketToolClick = { isBucketToolSelected = !isBucketToolSelected },
+                            onPencilToolClick = {isPencilToolSelected = !isPencilToolSelected}
                         )
                     }
                 }
