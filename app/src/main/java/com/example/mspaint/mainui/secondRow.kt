@@ -14,6 +14,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
@@ -34,6 +38,7 @@ fun SecondRow(
     onBucketToolClick: () -> Unit,
     onPencilToolClick: () -> Unit,
 ) {
+    var toolSelected by remember { mutableStateOf(false) }
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -80,12 +85,12 @@ fun SecondRow(
             modifier = reusableModifier
         ) {
             Button(
-                onClick = { onToggleSlider(!showSlider);
-                    if (!showSlider) {
-                        toolbarState = 2
+                onClick = { onToggleSlider(false);
+                    if (toolSelected) {
+                        toolbarState = 0
                     }
                     else {
-                        toolbarState = 0
+
                     }
                           },
                 shape = RectangleShape,
@@ -102,8 +107,9 @@ fun SecondRow(
             modifier = reusableModifier
         ) {
             Button(
-                onClick = { onPencilToolClick()
-                    pencil(); toolbarState= 5},
+
+                onClick = { pencil(); toolbarState= 5; toolSelected = true;onToggleSlider(true)},
+
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
@@ -118,7 +124,7 @@ fun SecondRow(
             modifier = reusableModifier
         ) {
             Button(
-                onClick = { eraser(); toolbarState = 3},
+                onClick = { eraser(); toolbarState = 3; toolSelected = true; onToggleSlider(true)},
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
