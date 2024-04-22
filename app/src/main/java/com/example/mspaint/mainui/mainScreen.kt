@@ -44,6 +44,9 @@ fun MainScreen() {
     val paths = remember {
         mutableStateListOf<Pair<Path,PathProperties>>()
     }
+    val tempPath = remember {
+        mutableStateListOf<Pair<Path,PathProperties>>()
+    }
     val undonePaths = remember {
         mutableStateListOf<Pair<Path,PathProperties>>()
     }
@@ -79,39 +82,39 @@ fun MainScreen() {
                     Row(modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                     ) {
-                        var currentPath = Path()
+                        var currentPath = remember { Path() }
                         var currentPathProperties = PathProperties(
                             color = hue,
                             strokeWidth = pencilWidth,
                             strokeCap = StrokeCap.Round
                         )
                         Canvas(
-                                // sets up the canvas
-                                modifier = Modifier
-                                    .size(width = 350.dp, height = 500.dp)
-                                    .background(color = Color.White)
-                                    .pointerInput(true) {
-                                        detectDragGestures(
-                                            onDrag = { change, dragAmount ->
-                                                change.consume()
-
-                                                currentPath.lineTo(change.position.x, change.position.y)
-                                            },
-                                            onDragStart = {
-                                                currentPath = Path().apply {
-                                                    moveTo(it.x, it.y)
-                                                }
-                                            },
-                                            onDragEnd = {
-                                                paths.add(Pair(currentPath, currentPathProperties))
+                            // sets up the canvas
+                            modifier = Modifier
+                                .size(width = 350.dp, height = 500.dp)
+                                .background(color = Color.White)
+                                .pointerInput(true) {
+                                    detectDragGestures(
+                                        onDrag = { change, dragAmount ->
+                                            change.consume()
+                                            currentPath.lineTo(change.position.x, change.position.y)
+                                            // Update the canvas in real-time
+                                            tempPath.add(Pair(currentPath, currentPathProperties))
+                                        },
+                                        onDragStart = {
+                                            currentPath = Path().apply {
+                                                moveTo(it.x, it.y)
                                             }
-                                        )
-
-                                    }
-                                ) // creates the actual drawing. drawLine function is a part of Jetpack Compose
-                        {
-                            paths.forEach {
-                                (path,property)->
+                                        },
+                                        onDragEnd = {
+                                            paths.add(Pair(currentPath, currentPathProperties))
+                                            tempPath.clear()
+                                        }
+                                    )
+                                }
+                        ) {
+                            // draw existing paths
+                            paths.forEach { (path, property) ->
                                 drawPath(
                                     color = property.color,
                                     path = path,
@@ -122,11 +125,24 @@ fun MainScreen() {
                                     )
                                 )
                             }
+                            // draw the current path in real-time
+                            tempPath.forEach { (path, property) ->
+                                drawPath(
+                                    color = currentPathProperties.color,
+                                    path = currentPath,
+                                    style = Stroke(
+                                        width = currentPathProperties.strokeWidth,
+                                        cap = currentPathProperties.strokeCap,
+                                        join = currentPathProperties.strokeJoin
+                                    )
+                                )
+                            }
 
                         }
                     }
                 }
             }
+
 
 
             // the toolbar
