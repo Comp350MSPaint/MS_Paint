@@ -82,12 +82,8 @@ fun MainScreen() {
                     Row(modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                     ) {
-                        var currentPath = remember { Path() }
-                        var currentPathProperties = PathProperties(
-                            color = hue,
-                            strokeWidth = pencilWidth,
-                            strokeCap = StrokeCap.Round
-                        )
+                        var currentPath by remember {mutableStateOf(Path())}
+                        var currentPathProperties by remember {mutableStateOf(PathProperties())}
                         Canvas(
                             // sets up the canvas
                             modifier = Modifier
