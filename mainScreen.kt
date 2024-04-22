@@ -108,41 +108,51 @@ fun MainScreen() {
                                             } else {
                                                 tapX2 = it.x
                                                 tapY2 = it.y
-                                                lines.add(Line(start = Offset(tapX, tapY), end = Offset(tapX2, tapY2), color = Color.Black))
+                                                if (!isBucketToolSelected) {
+                                                    lines.add(
+                                                        Line(
+                                                            start = Offset(tapX, tapY),
+                                                            end = Offset(tapX2, tapY2),
+                                                            color = Color.Black
+                                                        )
+                                                    )
+                                                }
                                                 tapX = 0f
                                                 tapY = 0f
                                             }
                                         }
-                                    )
-                                }
-                                .pointerInput(true) {
-                                    detectDragGestures(
-                                        onDragEnd = {
-                                            strokeCount++ // Increment stroke count when drag gesture ends
-                                        }
-                                    ) { change,
-                                        dragAmount ->
-                                        change.consume()
+                                    )}
 
-                                        val line = Line(
-                                            start = change.position - dragAmount,
-                                            end = change.position
-                                        )
-                                        lines.add(line)
-                                        tickCount++
-                                    }
-                                }
+                                .pointerInput(true) {
+                                        detectDragGestures(
+                                            onDragEnd = {
+                                                strokeCount++ // Increment stroke count when drag gesture ends
+                                            }
+                                        ) { change,
+                                            dragAmount ->
+                                            change.consume()
+
+                                            val line = Line(
+                                                start = change.position - dragAmount,
+                                                end = change.position
+                                            )
+                                            if(isBucketToolSelected) {
+                                                lines.add(line)
+                                            }
+                                            tickCount++
+
+                                    }}
                         ) { // Creates the actual drawing. drawLine function is a part of Jetpack Compose
                             lines.forEach { line ->
 
-                                    // Draw lines only if there are any
-                                    drawLine(
-                                        color = line.color,
-                                        start = line.start,
-                                        end = line.end,
-                                        strokeWidth = 2.dp.toPx(), // Adjust stroke width as needed
-                                        cap = StrokeCap.Round
-                                    )
+                                // Draw lines only if there are any
+                                drawLine(
+                                    color = line.color,
+                                    start = line.start,
+                                    end = line.end,
+                                    strokeWidth = line.strokeWidth.toPx(), // Adjust stroke width as needed
+                                    cap = StrokeCap.Round
+                                )
 
 
 
