@@ -85,7 +85,6 @@ fun MainScreen() {
                     ) {
                         var currentPath by remember {mutableStateOf(Path())}
                         var currentPathProperties by remember {mutableStateOf(PathProperties())}
-                        currentPathProperties.strokeWidth = sliderPosition
                         var finalProperty: PathProperties
 
                         Canvas(
@@ -105,10 +104,9 @@ fun MainScreen() {
                                             currentPath = Path().apply {
                                                 moveTo(it.x, it.y)
                                             }
-                                            currentPathProperties.color = hue
                                             currentPathProperties = PathProperties (
-                                                strokeWidth = currentPathProperties.strokeWidth,
-                                                color = currentPathProperties.color
+                                                strokeWidth = sliderPosition,
+                                                color = hue
                                             )
                                         },
                                         onDragEnd = {
