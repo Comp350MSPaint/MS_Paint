@@ -34,7 +34,9 @@ fun SecondRow(
     undo: ()-> Unit,
     redo: ()-> Unit,
     showSlider: Boolean,
-    onToggleSlider: (Boolean) -> Unit
+    onToggleSlider: (Boolean) -> Unit,
+    onBucketToolClick: () -> Unit,
+    onPencilToolClick: () -> Unit,
 ) {
     var toolSelected by remember { mutableStateOf(false) }
     Row(
@@ -105,7 +107,9 @@ fun SecondRow(
             modifier = reusableModifier
         ) {
             Button(
+
                 onClick = { pencil(); toolbarState= 5; toolSelected = true;onToggleSlider(true)},
+
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
@@ -135,7 +139,7 @@ fun SecondRow(
             modifier = reusableModifier
         ) {
             Button(
-                onClick = { pencil() },
+                onClick = {onBucketToolClick() },
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
