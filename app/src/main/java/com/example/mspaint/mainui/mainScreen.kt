@@ -36,7 +36,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.room.util.copy
 import com.example.mspaint.R
 import com.example.mspaint.canvasObjectData.PathProperties
 import com.example.mspaint.canvasObjectData.hue
