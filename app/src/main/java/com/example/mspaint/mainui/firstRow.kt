@@ -51,19 +51,19 @@ fun firstRow(
                     .size(width = 53.dp, height = 65.dp)
             ) {
                 OutlinedButton(
-                    onClick = { pencil() },
+                    onClick = { pencil(); toolbarState = 1 },
                     border = BorderStroke(2.dp, Color.Black),
                     shape = RectangleShape,
                     modifier = Modifier.size(width = 50.dp, height = 65.dp)
                 ) {
 
                 }
-                Image(
-                    painter = painterResource(R.drawable.options),
-                    contentDescription = "options",
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                )
+               // Image(
+                //    painter = painterResource(R.drawable.options),
+                //    contentDescription = "options",
+                //    modifier = Modifier
+                //        .align(Alignment.BottomEnd)
+                //)
             }
         }
         Box(

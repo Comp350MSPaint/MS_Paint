@@ -1,6 +1,7 @@
 package com.example.mspaint.mainui
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
@@ -26,23 +28,32 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.mspaint.canvasObjectData.Line
+import com.example.mspaint.R
+import com.example.mspaint.canvasObjectData.PathProperties
+import com.example.mspaint.canvasObjectData.hue
 import com.example.mspaint.canvasObjectData.pencilWidth
 import com.example.mspaint.ui.theme.PureBlack
 
+var toolbarState by mutableStateOf(0)
 @Composable
 fun MainScreen() {
     // list of lines
-    val lines = remember {
-        mutableStateListOf<Line>()
+    val paths = remember {
+        mutableStateListOf<Pair<Path,PathProperties>>()
     }
-    val undoneLines = remember {
-        mutableStateListOf<Line>()
+    val tempPath = remember {
+        mutableStateListOf<Pair<Path,PathProperties>>()
+    }
+    val undonePaths = remember {
+        mutableStateListOf<Pair<Path,PathProperties>>()
     }
 
     var sliderPosition by remember { mutableFloatStateOf(0f) }
@@ -52,6 +63,7 @@ fun MainScreen() {
     // Define a callback to toggle the slider visibility
     val onToggleSlider: (Boolean) -> Unit = { showSlider = it }
 
+    var hide: Boolean = true
     Column(
         modifier = Modifier
             .fillMaxHeight()
@@ -66,7 +78,10 @@ fun MainScreen() {
             Box(
                 modifier = Modifier
                     .border(width = 2.dp, color = PureBlack, shape = RectangleShape)
-                    .size(width = 400.dp, height = 645.dp)//The size of this box add the size of tool bar fill the whole screen,
+                    .size(
+                        width = 400.dp,
+                        height = 645.dp
+                    )//The size of this box add the size of tool bar fill the whole screen,
                     .align(Alignment.TopCenter)
                     .padding(5.dp)
             ) {
@@ -76,39 +91,70 @@ fun MainScreen() {
                     Row(modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                     ) {
-                        Canvas(
-                                // sets up the canvas
-                                modifier = Modifier
-                                    // .fillMaxSize()
-                                    .size(width = 350.dp, height = 500.dp)
-                                    .background(color = Color.White)
-                                    .pointerInput(true) {
-                                        detectDragGestures { change,
-                                                             dragAmount ->
-                                            change.consume()
+                        var currentPath by remember {mutableStateOf(Path())}
+                        var currentPathProperties by remember {mutableStateOf(PathProperties())}
+                        var finalProperty: PathProperties
 
-                                            val line = Line(
-                                                start = change.position - dragAmount,
-                                                end = change.position
+                        Canvas(
+                            // sets up the canvas
+                            modifier = Modifier
+                                .size(width = 350.dp, height = 500.dp)
+                                .background(color = Color.White)
+                                .pointerInput(true) {
+                                    detectDragGestures(
+                                        onDrag = { change, dragAmount ->
+                                            change.consume()
+                                            currentPath.lineTo(change.position.x, change.position.y)
+                                            // Update the canvas in real-time
+                                            tempPath.add(Pair(currentPath, currentPathProperties))
+                                        },
+                                        onDragStart = {
+                                            currentPath = Path().apply {
+                                                moveTo(it.x, it.y)
+                                            }
+                                            currentPathProperties = PathProperties(
+                                                strokeWidth = sliderPosition,
+                                                color = hue
                                             )
-                                            lines.add(line)
+                                        },
+                                        onDragEnd = {
+                                            finalProperty = PathProperties(currentPathProperties)
+                                            paths.add(Pair(currentPath, finalProperty))
+                                            tempPath.clear()
                                         }
-                                    }
-                                ) // creates the actual drawing. drawLine function is a part of Jetpack Compose
-                        {
-                            lines.forEach { line ->
-                                drawLine(
-                                    color = line.color,
-                                    start = line.start,
-                                    end = line.end,
-                                    strokeWidth = line.strokeWidth.toPx(),
-                                    cap = StrokeCap.Round
+                                    )
+                                }
+                        ) {
+                            // draw the completed paths
+                            paths.forEach { (path, property) ->
+                                drawPath(
+                                    color = property.color,
+                                    path = path,
+                                    style = Stroke(
+                                        width = property.strokeWidth,
+                                        cap = property.strokeCap,
+                                        join = property.strokeJoin
+                                    )
                                 )
                             }
+                            // draw the current path in real-time
+                            tempPath.forEach { (path, property) ->
+                                drawPath(
+                                    color = currentPathProperties.color,
+                                    path = currentPath,
+                                    style = Stroke(
+                                        width = currentPathProperties.strokeWidth,
+                                        cap = currentPathProperties.strokeCap,
+                                        join = currentPathProperties.strokeJoin
+                                    )
+                                )
+                            }
+
                         }
                     }
                 }
             }
+
 
 
             // the toolbar
@@ -121,7 +167,7 @@ fun MainScreen() {
             ) {
                 // rows
                 Column {
-                    var hide: Boolean = true
+
                     // first row
                     hide = firstRow(
                         showSlider,
@@ -150,17 +196,17 @@ fun MainScreen() {
                     if (!hide) {
                         SecondRow(
                             undo = {
-                                if (lines.isNotEmpty()) {
-                                    val lastLine = lines.last()
-                                    lines.remove(lastLine)
-                                    undoneLines.add(lastLine)
+                                if (paths.isNotEmpty()) {
+                                    val lastLine = paths.last()
+                                    paths.remove(lastLine)
+                                    undonePaths.add(lastLine)
                                 }
                             },
                             redo = {
-                                if (undoneLines.isNotEmpty()) {
-                                    val undoneLine = undoneLines.last()
-                                    undoneLines.remove(undoneLine)
-                                    lines.add(undoneLine)
+                                if (undonePaths.isNotEmpty()) {
+                                    val undoneLine = undonePaths.last()
+                                    undonePaths.remove(undoneLine)
+                                    paths.add(undoneLine)
                                 }
                             },
                             showSlider,
@@ -170,6 +216,20 @@ fun MainScreen() {
                 }
             }
 
+        }
+    }
+
+    if (!hide) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 25.dp)
+        ) {
+            ToolbarUI(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter),
+                toolbarState
+            )
         }
     }
 }
