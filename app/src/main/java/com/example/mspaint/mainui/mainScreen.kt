@@ -33,6 +33,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.room.util.copy
 import com.example.mspaint.canvasObjectData.PathProperties
 import com.example.mspaint.canvasObjectData.hue
 import com.example.mspaint.canvasObjectData.pencilWidth
@@ -84,6 +85,9 @@ fun MainScreen() {
                     ) {
                         var currentPath by remember {mutableStateOf(Path())}
                         var currentPathProperties by remember {mutableStateOf(PathProperties())}
+                        currentPathProperties.strokeWidth = sliderPosition
+                        var finalProperty: PathProperties
+
                         Canvas(
                             // sets up the canvas
                             modifier = Modifier
@@ -101,15 +105,21 @@ fun MainScreen() {
                                             currentPath = Path().apply {
                                                 moveTo(it.x, it.y)
                                             }
+                                            currentPathProperties.color = hue
+                                            currentPathProperties = PathProperties (
+                                                strokeWidth = currentPathProperties.strokeWidth,
+                                                color = currentPathProperties.color
+                                            )
                                         },
                                         onDragEnd = {
-                                            paths.add(Pair(currentPath, currentPathProperties))
+                                            finalProperty = PathProperties(currentPathProperties)
+                                            paths.add(Pair(currentPath, finalProperty))
                                             tempPath.clear()
                                         }
                                     )
                                 }
                         ) {
-                            // draw existing paths
+                            // draw the completed paths
                             paths.forEach { (path, property) ->
                                 drawPath(
                                     color = property.color,

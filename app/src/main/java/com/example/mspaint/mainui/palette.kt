@@ -29,7 +29,9 @@ import com.example.mspaint.ui.theme.White
 import com.example.mspaint.ui.theme.Yellow
 
 @Composable
-fun PalletFunc() {
+fun PalletFunc (
+
+) {
     Column(
         modifier = Modifier.background(Color.Black)
             .height(100.dp)
