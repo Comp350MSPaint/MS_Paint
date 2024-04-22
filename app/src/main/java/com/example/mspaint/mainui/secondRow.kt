@@ -78,46 +78,53 @@ fun SecondRow(
             modifier = reusableModifier
         ) {
             Button(
-                onClick = { onToggleSlider(!showSlider)},
+                onClick = { onToggleSlider(!showSlider);
+                    if (!showSlider) {
+                        toolbarState = 2
+                    }
+                    else {
+                        toolbarState = 0
+                    }
+                          },
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
 
             }
-            Image(
-                painter = painterResource(R.drawable.pallet),
-                contentDescription = "pallet"
-            )
+            //Image(
+            //    painter = painterResource(R.drawable.pallet),
+            //    contentDescription = "pallet"
+           // )
         }
         Box(
             modifier = reusableModifier
         ) {
             Button(
-                onClick = { pencil() },
+                onClick = { pencil(); toolbarState= 5},
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
 
             }
-            Image(
-                painter = painterResource(R.drawable.pencil),
-                contentDescription = "pencil"
-            )
+          //  Image(
+          //      painter = painterResource(R.drawable.pencil),
+          //      contentDescription = "pencil"
+          //  )
         }
         Box(
             modifier = reusableModifier
         ) {
             Button(
-                onClick = { eraser() },
+                onClick = { eraser(); toolbarState = 3},
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
 
             }
-            Image(
-                painter = painterResource(R.drawable.eraser),
-                contentDescription = "eraser"
-            )
+            //Image(
+            //    painter = painterResource(R.drawable.eraser),
+            //    contentDescription = "eraser"
+            //)
         }
         Box(
             modifier = reusableModifier

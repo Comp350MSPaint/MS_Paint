@@ -1,6 +1,7 @@
 package com.example.mspaint.mainui
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
@@ -31,14 +33,17 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.room.util.copy
+import com.example.mspaint.R
 import com.example.mspaint.canvasObjectData.PathProperties
 import com.example.mspaint.canvasObjectData.hue
 import com.example.mspaint.canvasObjectData.pencilWidth
 import com.example.mspaint.ui.theme.PureBlack
 
+var toolbarState by mutableStateOf(0)
 @Composable
 fun MainScreen() {
     // list of lines
@@ -59,6 +64,7 @@ fun MainScreen() {
     // Define a callback to toggle the slider visibility
     val onToggleSlider: (Boolean) -> Unit = { showSlider = it }
 
+    var hide: Boolean = true
     Column(
         modifier = Modifier
             .fillMaxHeight()
@@ -73,7 +79,10 @@ fun MainScreen() {
             Box(
                 modifier = Modifier
                     .border(width = 2.dp, color = PureBlack, shape = RectangleShape)
-                    .size(width = 400.dp, height = 645.dp)//The size of this box add the size of tool bar fill the whole screen,
+                    .size(
+                        width = 400.dp,
+                        height = 645.dp
+                    )//The size of this box add the size of tool bar fill the whole screen,
                     .align(Alignment.TopCenter)
                     .padding(5.dp)
             ) {
@@ -104,7 +113,7 @@ fun MainScreen() {
                                             currentPath = Path().apply {
                                                 moveTo(it.x, it.y)
                                             }
-                                            currentPathProperties = PathProperties (
+                                            currentPathProperties = PathProperties(
                                                 strokeWidth = sliderPosition,
                                                 color = hue
                                             )
@@ -159,7 +168,7 @@ fun MainScreen() {
             ) {
                 // rows
                 Column {
-                    var hide: Boolean = true
+
                     // first row
                     hide = firstRow(
                         showSlider,
@@ -208,6 +217,20 @@ fun MainScreen() {
                 }
             }
 
+        }
+    }
+
+    if (!hide) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 25.dp)
+        ) {
+            ToolbarUI(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter),
+                toolbarState
+            )
         }
     }
 }
