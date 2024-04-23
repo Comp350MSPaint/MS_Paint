@@ -29,7 +29,9 @@ import com.example.mspaint.ui.theme.White
 import com.example.mspaint.ui.theme.Yellow
 
 @Composable
-fun PalletFunc() {
+fun PalletFunc (
+
+) {
     Column(
         modifier = Modifier.background(Color.Black)
             .height(100.dp)
@@ -60,9 +62,9 @@ fun PalletFunc() {
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { hue = Yellow},
+                    onClick = { hue = Orange},
                     shape = RectangleShape,
-                    colors = ButtonDefaults.buttonColors(Yellow),
+                    colors = ButtonDefaults.buttonColors(Orange),
                     modifier = Modifier
                         .size(width = 47.dp, height = 50.dp)
                 ) {
@@ -74,9 +76,9 @@ fun PalletFunc() {
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { hue = Orange },
+                    onClick = { hue = Yellow },
                     shape = RectangleShape,
-                    colors = ButtonDefaults.buttonColors(Orange),
+                    colors = ButtonDefaults.buttonColors(Yellow),
                     modifier = Modifier
                         .size(width = 47.dp, height = 50.dp)
                 ) {

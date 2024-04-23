@@ -14,6 +14,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
@@ -30,8 +34,11 @@ fun SecondRow(
     undo: ()-> Unit,
     redo: ()-> Unit,
     showSlider: Boolean,
-    onToggleSlider: (Boolean) -> Unit
+    onToggleSlider: (Boolean) -> Unit,
+    onBucketToolClick: (Boolean)->Unit,
+    onPencilToolClick: () -> Unit,
 ) {
+    var toolSelected by remember { mutableStateOf(false) }
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -78,52 +85,61 @@ fun SecondRow(
             modifier = reusableModifier
         ) {
             Button(
-                onClick = { onToggleSlider(!showSlider)},
+                onClick = { onToggleSlider(false);
+                    if (toolSelected) {
+                        toolbarState = 0
+                    }
+                    else {
+
+                    }
+                          },
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
 
             }
-            Image(
-                painter = painterResource(R.drawable.pallet),
-                contentDescription = "pallet"
-            )
+            //Image(
+            //    painter = painterResource(R.drawable.pallet),
+            //    contentDescription = "pallet"
+           // )
         }
         Box(
             modifier = reusableModifier
         ) {
             Button(
-                onClick = { pencil() },
+
+                onClick = { pencil(); toolbarState= 5; toolSelected = true;onToggleSlider(true);onBucketToolClick(false)},
+
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
 
             }
-            Image(
-                painter = painterResource(R.drawable.pencil),
-                contentDescription = "pencil"
-            )
+          //  Image(
+          //      painter = painterResource(R.drawable.pencil),
+          //      contentDescription = "pencil"
+          //  )
         }
         Box(
             modifier = reusableModifier
         ) {
             Button(
-                onClick = { eraser() },
+                onClick = { eraser(); toolbarState = 3; toolSelected = true; onToggleSlider(true);onBucketToolClick(false)},
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
 
             }
-            Image(
-                painter = painterResource(R.drawable.eraser),
-                contentDescription = "eraser"
-            )
+            //Image(
+            //    painter = painterResource(R.drawable.eraser),
+            //    contentDescription = "eraser"
+            //)
         }
         Box(
             modifier = reusableModifier
         ) {
             Button(
-                onClick = { pencil() },
+                onClick = {pencil()},
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
@@ -138,16 +154,16 @@ fun SecondRow(
             modifier = reusableModifier
         ) {
             Button(
-                onClick = { pencil() },
+                onClick = { onBucketToolClick(true); toolbarState = 4},
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
 
             }
-            Image(
-                painter = painterResource(R.drawable.shapes),
-                contentDescription = "shape"
-            )
+           // Image(
+           //     painter = painterResource(R.drawable.shapes),
+           //     contentDescription = "shape"
+           // )
         }
 
     }
