@@ -1,7 +1,6 @@
 package com.example.mspaint.mainui
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
@@ -28,17 +26,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.mspaint.R
 import com.example.mspaint.canvasObjectData.PathProperties
 import com.example.mspaint.canvasObjectData.hue
 import com.example.mspaint.canvasObjectData.pencilWidth
@@ -64,8 +58,10 @@ fun MainScreen() {
 
     // Define a callback to toggle the slider visibility
     val onToggleSlider: (Boolean) -> Unit = { showSlider = it }
-    var isBucketToolSelected by remember { mutableStateOf(false) }
+    var isShapeToolSelected by remember { mutableStateOf(false) }
     var isPencilToolSelected by remember { mutableStateOf(false) }
+
+    val onBucketToolClick: (Boolean)-> Unit = {isShapeToolSelected = it }
     var hide: Boolean = true
     var tapX by remember { mutableStateOf(0f) }
     var tapY by remember { mutableStateOf(0f) }
@@ -112,7 +108,7 @@ fun MainScreen() {
                                     detectDragGestures(
                                         onDrag = { change, dragAmount ->
                                             change.consume()
-                                            if(!isBucketToolSelected){
+                                            if(!isShapeToolSelected){
                                             currentPath.lineTo(change.position.x, change.position.y)
                                             }
                                             // Update the canvas in real-time
@@ -138,16 +134,16 @@ fun MainScreen() {
                                     detectTapGestures(
                                         onPress = { it ->
                                             if (tapX == 0f && tapY == 0f) {
-                                                if (isBucketToolSelected) {
+                                                if (isShapeToolSelected) {
                                                     tapX = it.x
                                                     tapY = it.y
                                                 }
                                             } else {
-                                                if (isBucketToolSelected) {
+                                                if (isShapeToolSelected) {
                                                     tapX2 = it.x
                                                     tapY2 = it.y
                                                 }
-                                                if (isBucketToolSelected) {
+                                                if (isShapeToolSelected) {
                                                     paths.add(
                                                         Pair(
                                                             Path().apply {
@@ -252,7 +248,7 @@ fun MainScreen() {
                             },
                             showSlider,
                             onToggleSlider,
-                            onBucketToolClick = { isBucketToolSelected = !isBucketToolSelected },
+                            onBucketToolClick,
                             onPencilToolClick = {isPencilToolSelected = !isPencilToolSelected}
                         )
                     }

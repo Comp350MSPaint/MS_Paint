@@ -35,7 +35,7 @@ fun SecondRow(
     redo: ()-> Unit,
     showSlider: Boolean,
     onToggleSlider: (Boolean) -> Unit,
-    onBucketToolClick: () -> Unit,
+    onBucketToolClick: (Boolean)->Unit,
     onPencilToolClick: () -> Unit,
 ) {
     var toolSelected by remember { mutableStateOf(false) }
@@ -108,7 +108,7 @@ fun SecondRow(
         ) {
             Button(
 
-                onClick = { pencil(); toolbarState= 5; toolSelected = true;onToggleSlider(true)},
+                onClick = { pencil(); toolbarState= 5; toolSelected = true;onToggleSlider(true);onBucketToolClick(false)},
 
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
@@ -124,7 +124,7 @@ fun SecondRow(
             modifier = reusableModifier
         ) {
             Button(
-                onClick = { eraser(); toolbarState = 3; toolSelected = true; onToggleSlider(true)},
+                onClick = { eraser(); toolbarState = 3; toolSelected = true; onToggleSlider(true);onBucketToolClick(false)},
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
@@ -139,7 +139,7 @@ fun SecondRow(
             modifier = reusableModifier
         ) {
             Button(
-                onClick = {onBucketToolClick() },
+                onClick = {pencil()},
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
@@ -154,16 +154,16 @@ fun SecondRow(
             modifier = reusableModifier
         ) {
             Button(
-                onClick = { pencil() },
+                onClick = { onBucketToolClick(true); toolbarState = 4},
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
 
             }
-            Image(
-                painter = painterResource(R.drawable.shapes),
-                contentDescription = "shape"
-            )
+           // Image(
+           //     painter = painterResource(R.drawable.shapes),
+           //     contentDescription = "shape"
+           // )
         }
 
     }
