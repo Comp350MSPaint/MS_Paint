@@ -40,6 +40,11 @@ fun ToolbarUI (
             contentDescription = "shape",
             modifier = modifier
         )
+        4-> Image(
+            painter = painterResource(R.drawable.toolbarn_shapes),
+            contentDescription = "shape",
+            modifier = modifier
+        )
         5-> Image(
             painter = painterResource(R.drawable.toolbarn_pencil),
             contentDescription = "shape",
