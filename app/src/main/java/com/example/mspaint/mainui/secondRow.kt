@@ -156,7 +156,7 @@ fun SecondRow(
             modifier = reusableModifier
         ) {
             Button(
-                onClick = { onBucketToolClick(true); toolbarState = 4; hue = restoreToHue; onToggleSlider(true);onBucketToolClick(false)},
+                onClick = { onBucketToolClick(true); toolbarState = 4; hue = restoreToHue; onToggleSlider(true)},
                 shape = RectangleShape,                             //restoreToHue makes the color back to "non-eraser" color
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
