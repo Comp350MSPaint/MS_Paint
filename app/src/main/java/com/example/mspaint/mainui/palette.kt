@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.example.mspaint.canvasObjectData.hue
 import com.example.mspaint.tools.pencil
+import com.example.mspaint.tools.restoreToHue
 import com.example.mspaint.ui.theme.Aqua
 import com.example.mspaint.ui.theme.Black
 import com.example.mspaint.ui.theme.Blue
@@ -119,7 +120,7 @@ fun PalletFunc (
             modifier = Modifier
                 .width(237.dp)
                 .height(50.dp)
-        ){
+        ) {
             Box(
                 modifier = Modifier
             ) {
