@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.example.mspaint.canvasObjectData.hue
 import com.example.mspaint.tools.pencil
+import com.example.mspaint.tools.restoreToHue
 import com.example.mspaint.ui.theme.Aqua
 import com.example.mspaint.ui.theme.Black
 import com.example.mspaint.ui.theme.Blue
@@ -48,7 +49,7 @@ fun PalletFunc (
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { hue = Red },
+                    onClick = { hue = Red; restoreToHue = hue },
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(Red),
                     modifier = Modifier
@@ -62,7 +63,7 @@ fun PalletFunc (
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { hue = Orange},
+                    onClick = { hue = Orange; restoreToHue = hue},
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(Orange),
                     modifier = Modifier
@@ -76,7 +77,7 @@ fun PalletFunc (
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { hue = Yellow },
+                    onClick = { hue = Yellow; restoreToHue = hue },
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(Yellow),
                     modifier = Modifier
@@ -90,7 +91,7 @@ fun PalletFunc (
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { hue = Green },
+                    onClick = { hue = Green; restoreToHue = hue },
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(Green),
                     modifier = Modifier
@@ -104,7 +105,7 @@ fun PalletFunc (
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { hue = Aqua },
+                    onClick = { hue = Aqua; restoreToHue = hue },
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(Aqua),
                     modifier = Modifier
@@ -124,7 +125,7 @@ fun PalletFunc (
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { hue = White },
+                    onClick = { hue = White; restoreToHue = hue },
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(White),
                     modifier = Modifier
@@ -138,7 +139,7 @@ fun PalletFunc (
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { hue = Black },
+                    onClick = { hue = Black; restoreToHue = hue },
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(Black),
                     modifier = Modifier
@@ -152,7 +153,7 @@ fun PalletFunc (
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { hue = Purple },
+                    onClick = { hue = Purple; restoreToHue = hue },
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(Purple),
                     modifier = Modifier
@@ -166,7 +167,7 @@ fun PalletFunc (
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { hue = Magenta },
+                    onClick = { hue = Magenta; restoreToHue = hue },
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(Magenta),
                     modifier = Modifier
@@ -180,7 +181,7 @@ fun PalletFunc (
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { hue = Blue },
+                    onClick = { hue = Blue; restoreToHue = hue },
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(Blue),
                     modifier = Modifier
