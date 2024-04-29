@@ -111,7 +111,7 @@ fun SecondRow(
             Button(
 
                 onClick = { pencil(); toolbarState= 5; hue = restoreToHue; toolSelected = true;onToggleSlider(true);onBucketToolClick(false)},
-                                                //restoreToHue makes the color back to "non-eraser" color
+                                                    //restoreToHue makes the color back to "non-eraser" color
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
