@@ -36,7 +36,10 @@ fun SecondRow(
     showSlider: Boolean,
     onToggleSlider: (Boolean) -> Unit,
     onToggleShapes: (Boolean) -> Unit,
+    onToggleTriangle: (Boolean) -> Unit,
+
     onPencilToolClick: () -> Unit,
+    showShapes: Boolean
 ) {
     var toolSelected by remember { mutableStateOf(false) }
     Row(
@@ -74,7 +77,7 @@ fun SecondRow(
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
-                
+
             }
             Image(
                 painter = painterResource(R.drawable.redo),
@@ -93,7 +96,7 @@ fun SecondRow(
                     else {
 
                     }
-                          },
+                },
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
@@ -102,30 +105,30 @@ fun SecondRow(
             //Image(
             //    painter = painterResource(R.drawable.pallet),
             //    contentDescription = "pallet"
-           // )
+            // )
         }
         Box(
             modifier = reusableModifier
         ) {
             Button(
 
-                onClick = { pencil(); toolbarState= 5; toolSelected = true;onToggleSlider(true);},
+                onClick = { pencil(); toolbarState= 5; toolSelected = true;onToggleSlider(true); onToggleShapes(false);},
 
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
 
             }
-          //  Image(
-          //      painter = painterResource(R.drawable.pencil),
-          //      contentDescription = "pencil"
-          //  )
+            //  Image(
+            //      painter = painterResource(R.drawable.pencil),
+            //      contentDescription = "pencil"
+            //  )
         }
         Box(
             modifier = reusableModifier
         ) {
             Button(
-                onClick = { eraser(); toolbarState = 3; toolSelected = true; onToggleSlider(true);},
+                onClick = { eraser(); toolbarState = 3; toolSelected = true; onToggleSlider(true); onToggleShapes(false);},
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
@@ -161,10 +164,10 @@ fun SecondRow(
             ) {
 
             }
-           // Image(
-           //     painter = painterResource(R.drawable.shapes),
-           //     contentDescription = "shape"
-           // )
+            // Image(
+            //     painter = painterResource(R.drawable.shapes),
+            //     contentDescription = "shape"
+            // )
         }
 
     }

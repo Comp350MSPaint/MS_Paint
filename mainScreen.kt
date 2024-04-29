@@ -59,9 +59,12 @@ fun MainScreen() {
 
     var showSlider by remember { mutableStateOf(false) }
     var showShapes by remember { mutableStateOf(false) }
+    var showTriangle by remember { mutableStateOf(false) }
+
     // Define a callback to toggle the slider visibility
     val onToggleSlider: (Boolean) -> Unit = { showSlider = it }
     val onToggleShapes: (Boolean) -> Unit = { showShapes = it }
+    val onToggleTriangle: (Boolean) -> Unit = { showTriangle = it }
     var isShapeToolSelected by remember { mutableStateOf(false) }
     var isPencilToolSelected by remember { mutableStateOf(false) }
 
@@ -111,7 +114,7 @@ fun MainScreen() {
                                     detectDragGestures(
                                         onDrag = { change, dragAmount ->
                                             change.consume()
-                                            if(!isShapeToolSelected){
+                                            if(!showShapes){
                                                 currentPath.lineTo(change.position.x, change.position.y)
                                             }
                                             // Update the canvas in real-time
@@ -137,12 +140,12 @@ fun MainScreen() {
                                     detectTapGestures(
                                         onPress = { it ->
                                             if (tapX == 0f && tapY == 0f) {
-                                                if (isShapeToolSelected) {
+                                                if (showTriangle) {
                                                     tapX = it.x
                                                     tapY = it.y
                                                 }
                                             } else {
-                                                if (isShapeToolSelected) {
+                                                if (showTriangle) {
                                                     // Calculate the vertices of the triangle
                                                     val vertex1X = tapX
                                                     val vertex1Y = tapY
@@ -223,7 +226,7 @@ fun MainScreen() {
 
                     // first row
                     hide = firstRow(
-                        showSlider, showShapes,
+                        showSlider, showShapes, onToggleTriangle,
                         slider = {
                             Slider(
                                 value = sliderPosition,
@@ -265,7 +268,9 @@ fun MainScreen() {
                             showSlider,
                             onToggleSlider,
                             onPencilToolClick = {isPencilToolSelected = !isPencilToolSelected},
-                            onToggleShapes = onToggleShapes
+                            onToggleShapes = onToggleShapes,
+                            showShapes = showShapes,
+                            onToggleTriangle = onToggleTriangle
                         )
                     }
                 }
