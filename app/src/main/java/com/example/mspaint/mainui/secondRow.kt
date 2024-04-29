@@ -25,8 +25,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mspaint.R
+import com.example.mspaint.canvasObjectData.hue
 import com.example.mspaint.tools.eraser
 import com.example.mspaint.tools.pencil
+import com.example.mspaint.tools.restoreToHue
 import com.example.mspaint.ui.theme.Grey
 
 @Composable
@@ -108,8 +110,8 @@ fun SecondRow(
         ) {
             Button(
 
-                onClick = { pencil(); toolbarState= 5; toolSelected = true;onToggleSlider(true);onBucketToolClick(false)},
-
+                onClick = { pencil(); toolbarState= 5; hue = restoreToHue; toolSelected = true;onToggleSlider(true);onBucketToolClick(false)},
+                                                //restoreToHue makes the color back to "non-eraser" color
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
@@ -154,8 +156,8 @@ fun SecondRow(
             modifier = reusableModifier
         ) {
             Button(
-                onClick = { onBucketToolClick(true); toolbarState = 4},
-                shape = RectangleShape,
+                onClick = { onBucketToolClick(true); toolbarState = 4; hue = restoreToHue; onToggleSlider(true);onBucketToolClick(false)},
+                shape = RectangleShape,                             //restoreToHue makes the color back to "non-eraser" color
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
 
