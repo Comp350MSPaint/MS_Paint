@@ -36,7 +36,6 @@ fun SecondRow(
     showSlider: Boolean,
     onToggleSlider: (Boolean) -> Unit,
     onToggleShapes: (Boolean) -> Unit,
-    onToggleTriangle: (Boolean) -> Unit,
 
     onPencilToolClick: () -> Unit,
     showShapes: Boolean

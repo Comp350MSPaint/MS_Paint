@@ -29,6 +29,10 @@ import com.example.mspaint.ui.theme.Yellow
 @Composable
 fun ShapesFunc (
     onToggleTriangle: (Boolean) -> Unit,
+    onToggleSquare: (Boolean) -> Unit,
+    onToggleCircle: (Boolean) -> Unit,
+    onToggleLine: (Boolean) -> Unit,
+
 
     ) {
     Column(
@@ -47,7 +51,11 @@ fun ShapesFunc (
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = {onToggleTriangle(true) },
+                    onClick = {onToggleTriangle(true)
+                        onToggleSquare(false)
+                              onToggleCircle(false)
+                        onToggleLine(false)},
+
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(Red),
                     modifier = Modifier
@@ -64,7 +72,10 @@ fun ShapesFunc (
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { hue = Orange},
+                    onClick = {onToggleSquare(false)
+                        onToggleTriangle(false)
+                              onToggleCircle(true)
+                        onToggleLine(false)},
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(Orange),
                     modifier = Modifier
@@ -81,7 +92,10 @@ fun ShapesFunc (
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { hue = Yellow },
+                    onClick = {onToggleSquare(true)
+                        onToggleTriangle(false)
+                        onToggleCircle(false)
+                        onToggleLine(false)},
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(Yellow),
                     modifier = Modifier
@@ -98,7 +112,10 @@ fun ShapesFunc (
                 modifier = Modifier
             ) {
                 Button(
-                    onClick = { hue = Green },
+                    onClick = { onToggleSquare(false)
+                        onToggleTriangle(false)
+                        onToggleCircle(false)
+                              onToggleLine(true)},
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(Green),
                     modifier = Modifier

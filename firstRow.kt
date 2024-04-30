@@ -32,6 +32,11 @@ fun firstRow(
     showSlider: Boolean,
     showShapes: Boolean,
     onToggleTriangle: (Boolean) -> Unit,
+    onToggleSquare: (Boolean) -> Unit,
+    onToggleCircle: (Boolean) -> Unit,
+    onToggleLine: (Boolean) -> Unit,
+
+
     slider: @Composable () -> Unit
 ): Boolean {
     var hidden by remember{ mutableStateOf(false) }
@@ -76,7 +81,7 @@ fun firstRow(
                 slider()
             }
             else if (showShapes){
-                ShapesFunc(onToggleTriangle)
+                ShapesFunc(onToggleTriangle, onToggleSquare, onToggleCircle, onToggleLine)
             }
             else{
                 PalletFunc()
