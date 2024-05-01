@@ -37,6 +37,7 @@ fun PalletFunc (
 ) {
     Column(
         modifier = Modifier
+            .padding(13.dp)
             .background(Color.Black)
             .height(100.dp)
             .width(237.dp)

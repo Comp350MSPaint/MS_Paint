@@ -59,17 +59,17 @@ fun firstRow(
                 ) {
 
                 }
-               // Image(
-                //    painter = painterResource(R.drawable.options),
-                //    contentDescription = "options",
-                //    modifier = Modifier
-                //        .align(Alignment.BottomEnd)
-                //)
+                Image(
+                    painter = painterResource(R.drawable.options),
+                    contentDescription = "options",
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                )
             }
         }
         Box(
             modifier = Modifier
-                .padding(14.dp)
+
                 .weight(5f)
                 .align(Alignment.CenterVertically)
         ) {
@@ -78,6 +78,16 @@ fun firstRow(
             }
             else {
                 PalletFunc()
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    PaletteImages(
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter),
+                        paletteState
+                    )
+                }
             }
         }
         Box(

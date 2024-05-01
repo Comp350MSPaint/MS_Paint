@@ -262,20 +262,7 @@ fun MainScreen() {
 
         }
     }
-    if (!showSlider) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            PaletteImages(
-                modifier = Modifier
-                    .padding(80.dp)
-                    .padding(bottom = 25.dp)
-                    .align(Alignment.BottomCenter),
-                paletteState
-            )
-        }
-    }
+
     if (!hide) {
         Box(
             modifier = Modifier
