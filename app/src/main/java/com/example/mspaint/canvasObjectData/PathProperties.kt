@@ -8,7 +8,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 var hue = Color.Red
-var pencilWidth: Float = 2f
+var pencilWidth: Float = 4f
 data class PathProperties(
     //val start: Offset,
     //val end: Offset,

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedButton
@@ -64,16 +65,18 @@ fun firstRow(
                 ) {
 
                 }
-                // Image(
-                //    painter = painterResource(R.drawable.options),
-                //    contentDescription = "options",
-                //    modifier = Modifier
-                //        .align(Alignment.BottomEnd)
-                //)
+                Image(
+                    painter = painterResource(R.drawable.options),
+                    contentDescription = "options",
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                )
+
             }
         }
         Box(
             modifier = Modifier
+
                 .weight(5f)
                 .align(Alignment.CenterVertically)
         ) {
@@ -85,6 +88,16 @@ fun firstRow(
             }
             else{
                 PalletFunc()
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    PaletteImages(
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter),
+                        paletteState
+                    )
+                }
             }
         }
         Box(

@@ -1,6 +1,7 @@
 package com.example.mspaint.mainui
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -20,6 +21,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,8 +34,10 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.mspaint.R
 import com.example.mspaint.canvasObjectData.PathProperties
 import com.example.mspaint.canvasObjectData.hue
 import com.example.mspaint.canvasObjectData.pencilWidth
@@ -41,7 +45,8 @@ import com.example.mspaint.ui.theme.PureBlack
 import kotlin.math.cos
 import kotlin.math.sin
 
-var toolbarState by mutableStateOf(0)
+var toolbarState by mutableIntStateOf(0)
+var paletteState by mutableIntStateOf(0)
 @Composable
 fun MainScreen() {
     // list of lines
@@ -368,7 +373,7 @@ fun MainScreen() {
                                     inactiveTrackColor = MaterialTheme.colorScheme.secondaryContainer,
                                 ),
                                 steps = 5,
-                                valueRange = 4f..20f,
+                                valueRange = 4f..50f,
 
                                 )
                             Text(
