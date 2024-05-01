@@ -365,6 +365,8 @@ fun MainScreen() {
                         showSlider, showShapes, onToggleTriangle, onToggleSquare, onToggleCircle, onToggleLine,
                         slider = {
                             Slider(
+                                modifier = Modifier
+                                    .fillMaxSize(),
                                 value = sliderPosition,
                                 onValueChange = { sliderPosition = it },
                                 colors = SliderDefaults.colors(
@@ -376,10 +378,6 @@ fun MainScreen() {
                                 valueRange = 4f..50f,
 
                                 )
-                            Text(
-                                text = sliderPosition.toString()
-
-                            )
                             pencilWidth = sliderPosition
                         }
                     )

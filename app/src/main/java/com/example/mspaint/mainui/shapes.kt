@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mspaint.R
@@ -41,15 +43,13 @@ fun ShapesFunc (
     ) {
     Column(
         modifier = Modifier.background(Color.Black)
-            .height(100.dp)
-            .width(245.dp)
+            .fillMaxSize()
             .background(Color.Yellow)
             .border(width = 3.dp, color = Color.Black)
     ){
         Row(
             modifier = Modifier
-                .width(245.dp)
-                .height(75.dp)
+
         ){
             Box(
                 modifier = Modifier
@@ -187,15 +187,13 @@ fun ShapesFunc (
         }
         Row(
             modifier = Modifier
-                .width(245.dp)
-                .height(40.dp)
-                .padding(start = 16.dp), // Adjust padding as needed
-            verticalAlignment = Alignment.Top // Align text to the top of the row
+                .padding(16.dp)
+                .align(Alignment.CenterHorizontally), // Adjust padding as needed
+            //verticalAlignment = Alignment.Top // Align text to the top of the row
         ) {
             Box(
                 modifier = Modifier
-
-                    .weight(5f)
+                    .fillMaxSize()
                     .align(Alignment.CenterVertically)
             ) {
                 slider()
@@ -205,4 +203,11 @@ fun ShapesFunc (
 
 
     }
+}
+
+
+@Preview
+@Composable
+fun ShapesPreview() {
+    MainScreen()
 }
