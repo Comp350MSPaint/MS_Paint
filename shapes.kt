@@ -1,5 +1,6 @@
 package com.example.mspaint.mainui
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -18,8 +19,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.mspaint.R
 import com.example.mspaint.canvasObjectData.hue
 import com.example.mspaint.ui.theme.Green
 import com.example.mspaint.ui.theme.Orange
@@ -39,7 +43,7 @@ fun ShapesFunc (
         modifier = Modifier.background(Color.Black)
             .height(100.dp)
             .width(245.dp)
-            .background(Color.Black)
+            .background(Color.Yellow)
             .border(width = 3.dp, color = Color.Black)
     ){
         Row(
@@ -50,83 +54,133 @@ fun ShapesFunc (
             Box(
                 modifier = Modifier
             ) {
+
                 Button(
                     onClick = {onToggleTriangle(true)
                         onToggleSquare(false)
-                              onToggleCircle(false)
-                        onToggleLine(false)},
-
-                    shape = RectangleShape,
-                    colors = ButtonDefaults.buttonColors(Red),
-                    modifier = Modifier
-                        .size(width = 61.dp, height = 60.dp)
-                        .border(
-                            width = 2.dp,
-                            color = Color.Black)
-                ) {
-
-                }
-
-            }
-            Box(
-                modifier = Modifier
-            ) {
-                Button(
-                    onClick = {onToggleSquare(false)
-                        onToggleTriangle(false)
-                              onToggleCircle(true)
-                        onToggleLine(false)},
-                    shape = RectangleShape,
-                    colors = ButtonDefaults.buttonColors(Orange),
-                    modifier = Modifier
-                        .size(width = 61.dp, height = 60.dp)
-                        .border(
-                            width = 2.dp,
-                            color = Color.Black)
-                ) {
-
-                }
-
-            }
-            Box(
-                modifier = Modifier
-            ) {
-                Button(
-                    onClick = {onToggleSquare(true)
-                        onToggleTriangle(false)
                         onToggleCircle(false)
                         onToggleLine(false)},
+
                     shape = RectangleShape,
-                    colors = ButtonDefaults.buttonColors(Yellow),
+                    //colors = ButtonDefaults.buttonColors(Red),
                     modifier = Modifier
                         .size(width = 61.dp, height = 60.dp)
                         .border(
                             width = 2.dp,
                             color = Color.Black)
-                ) {
+                )
+                {
 
                 }
+                Image(
+                    painter = painterResource(R.drawable.triangle),
+                    contentDescription = "linee",
+                    modifier = Modifier
+                            .size(width = 61.dp, height = 60.dp)
+                        .border(
+                            width = 2.dp,
+                            color = Color.Black),
+                contentScale = ContentScale.FillBounds // Adjust cont
+                )
 
             }
             Box(
                 modifier = Modifier
             ) {
+
                 Button(
-                    onClick = { onToggleSquare(false)
-                        onToggleTriangle(false)
-                        onToggleCircle(false)
-                              onToggleLine(true)},
+                    onClick = {onToggleTriangle(false)
+                        onToggleSquare(false)
+                        onToggleCircle(true)
+                        onToggleLine(false)},
+
                     shape = RectangleShape,
-                    colors = ButtonDefaults.buttonColors(Green),
+                    //colors = ButtonDefaults.buttonColors(Red),
                     modifier = Modifier
                         .size(width = 61.dp, height = 60.dp)
                         .border(
                             width = 2.dp,
                             color = Color.Black)
-
-                ) {
+                )
+                {
 
                 }
+                Image(
+                    painter = painterResource(R.drawable.circle),
+                    contentDescription = "linee",
+                    modifier = Modifier
+                        .size(width = 61.dp, height = 60.dp)
+                        .border(
+                            width = 2.dp,
+                            color = Color.Black),
+                    contentScale = ContentScale.FillBounds // Adjust cont
+                )
+
+            }
+            Box(
+                modifier = Modifier
+            ) {
+
+                Button(
+                    onClick = {onToggleTriangle(false)
+                        onToggleSquare(true)
+                        onToggleCircle(false)
+                        onToggleLine(false)},
+
+                    shape = RectangleShape,
+                    //colors = ButtonDefaults.buttonColors(Red),
+                    modifier = Modifier
+                        .size(width = 61.dp, height = 60.dp)
+                        .border(
+                            width = 2.dp,
+                            color = Color.Black)
+                )
+                {
+
+                }
+                Image(
+                    painter = painterResource(R.drawable.square),
+                    contentDescription = "linee",
+                    modifier = Modifier
+                        .size(width = 61.dp, height = 60.dp)
+                        .border(
+                            width = 2.dp,
+                            color = Color.Black),
+                    contentScale = ContentScale.FillBounds // Adjust cont
+                )
+
+            }
+            Box(
+                modifier = Modifier
+            ) {
+
+                Button(
+                    onClick = {onToggleTriangle(false)
+                        onToggleSquare(false)
+                        onToggleCircle(false)
+                        onToggleLine(true)},
+
+                    shape = RectangleShape,
+                    //colors = ButtonDefaults.buttonColors(Red),
+                    modifier = Modifier
+                        .size(width = 61.dp, height = 60.dp)
+                        .border(
+                            width = 2.dp,
+                            color = Color.Black)
+                )
+                {
+
+                }
+                Image(
+                    painter = painterResource(R.drawable.linee),
+                    contentDescription = "linee",
+                    modifier = Modifier
+                        .size(width = 61.dp, height = 60.dp)
+                        .border(
+                            width = 2.dp,
+                            color = Color.Black),
+                    contentScale = ContentScale.FillBounds // Adjust cont
+                )
 
             }
 
@@ -139,11 +193,12 @@ fun ShapesFunc (
             verticalAlignment = Alignment.Top // Align text to the top of the row
         ) {
             Text(
-                text = "Additional row text",
-                color = Color.White,
+                text = "t \n",
+                color = Color.Black,
                 fontSize = 20.sp, // Adjust the text size here
                 modifier = Modifier
                     .fillMaxWidth() // Fill the entire width of the row
+                    .alignByBaseline() // Align text to the baseline of the row
             )
         }
 

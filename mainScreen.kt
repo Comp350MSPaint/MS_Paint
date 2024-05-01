@@ -150,43 +150,43 @@ fun MainScreen() {
                                     detectTapGestures(
                                         onPress = { it ->
                                             if (showCircle && showShapes){
-                                            if (tapX == 0f && tapY == 0f) {
-                                                if (showCircle && showShapes) {
-                                                    tapX = it.x
-                                                    tapY = it.y
-                                                }
-                                            } else {
-                                                if (showCircle && showShapes) {
-                                                    // Calculate the center and radius of the circle
-                                                    val circleCenterX = (tapX + it.x) / 2
-                                                    val circleCenterY = (tapY + it.y) / 2
-                                                    val radius = Math.abs(tapX - it.x) / 2
-
-                                                    val circlePath = Path().apply {
-                                                        moveTo(circleCenterX + radius, circleCenterY) // Move to the starting point
-                                                        for (angle in 0..360 step 10) { // Draw small line segments to approximate the circle
-                                                            val x = circleCenterX + radius * cos(Math.toRadians(angle.toDouble())).toFloat()
-                                                            val y = circleCenterY + radius * sin(Math.toRadians(angle.toDouble())).toFloat()
-                                                            lineTo(x, y)
-                                                        }
-                                                        close() // Close the path to complete the circle
+                                                if (tapX == 0f && tapY == 0f) {
+                                                    if (showCircle && showShapes) {
+                                                        tapX = it.x
+                                                        tapY = it.y
                                                     }
+                                                } else {
+                                                    if (showCircle && showShapes) {
+                                                        // Calculate the center and radius of the circle
+                                                        val circleCenterX = (tapX + it.x) / 2
+                                                        val circleCenterY = (tapY + it.y) / 2
+                                                        val radius = Math.abs(tapX - it.x) / 2
+
+                                                        val circlePath = Path().apply {
+                                                            moveTo(circleCenterX + radius, circleCenterY) // Move to the starting point
+                                                            for (angle in 0..360 step 10) { // Draw small line segments to approximate the circle
+                                                                val x = circleCenterX + radius * cos(Math.toRadians(angle.toDouble())).toFloat()
+                                                                val y = circleCenterY + radius * sin(Math.toRadians(angle.toDouble())).toFloat()
+                                                                lineTo(x, y)
+                                                            }
+                                                            close() // Close the path to complete the circle
+                                                        }
 
 // Add the circle path to the paths list
-                                                    paths.add(
-                                                        Pair(
-                                                            circlePath,
-                                                            PathProperties(
-                                                                color = hue,
-                                                                strokeWidth = sliderPosition
+                                                        paths.add(
+                                                            Pair(
+                                                                circlePath,
+                                                                PathProperties(
+                                                                    color = hue,
+                                                                    strokeWidth = sliderPosition
+                                                                )
                                                             )
                                                         )
-                                                    )
+                                                    }
+                                                    tapX = 0f
+                                                    tapY = 0f
                                                 }
-                                                tapX = 0f
-                                                tapY = 0f
                                             }
-                                        }
                                             else if (showTriangle && showShapes) {
                                                 if (tapX == 0f && tapY == 0f) {
                                                     if (showShapes) {
