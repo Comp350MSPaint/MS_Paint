@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,6 +30,13 @@ import com.example.mspaint.ui.theme.Grey
 @Composable
 fun firstRow(
     showSlider: Boolean,
+    showShapes: Boolean,
+    onToggleTriangle: (Boolean) -> Unit,
+    onToggleSquare: (Boolean) -> Unit,
+    onToggleCircle: (Boolean) -> Unit,
+    onToggleLine: (Boolean) -> Unit,
+
+
     slider: @Composable () -> Unit
 ): Boolean {
     var hidden by remember{ mutableStateOf(false) }
@@ -58,7 +64,7 @@ fun firstRow(
                 ) {
 
                 }
-               // Image(
+                // Image(
                 //    painter = painterResource(R.drawable.options),
                 //    contentDescription = "options",
                 //    modifier = Modifier
@@ -74,7 +80,10 @@ fun firstRow(
             if (showSlider) {
                 slider()
             }
-            else {
+            else if (showShapes){
+                ShapesFunc(onToggleTriangle, onToggleSquare, onToggleCircle, onToggleLine)
+            }
+            else{
                 PalletFunc()
             }
         }
