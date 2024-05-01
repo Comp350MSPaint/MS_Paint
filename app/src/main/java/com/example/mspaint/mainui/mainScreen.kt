@@ -1,6 +1,7 @@
 package com.example.mspaint.mainui
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -31,14 +32,17 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.mspaint.R
 import com.example.mspaint.canvasObjectData.PathProperties
 import com.example.mspaint.canvasObjectData.hue
 import com.example.mspaint.canvasObjectData.pencilWidth
 import com.example.mspaint.ui.theme.PureBlack
 
 var toolbarState by mutableStateOf(0)
+var paletteState by mutableStateOf(0)
 @Composable
 fun MainScreen() {
     // list of lines
@@ -257,7 +261,18 @@ fun MainScreen() {
 
         }
     }
-
+    Box (
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        PaletteImages(
+           modifier = Modifier
+                .padding(80.dp)
+                .padding(bottom = 25.dp)
+                .align(Alignment.BottomCenter),
+            paletteState
+        )
+    }
     if (!hide) {
         Box(
             modifier = Modifier
