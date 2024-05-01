@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.RectangleShape
@@ -41,6 +42,8 @@ import com.example.mspaint.canvasObjectData.PathProperties
 import com.example.mspaint.canvasObjectData.hue
 import com.example.mspaint.canvasObjectData.pencilWidth
 import com.example.mspaint.ui.theme.PureBlack
+import kotlin.math.cos
+import kotlin.math.sin
 
 var toolbarState by mutableIntStateOf(0)
 var paletteState by mutableIntStateOf(0)
@@ -60,13 +63,25 @@ fun MainScreen() {
     var sliderPosition by remember { mutableFloatStateOf(0f) }
 
     var showSlider by remember { mutableStateOf(false) }
+    var showShapes by remember { mutableStateOf(false) }
+    var showTriangle by remember { mutableStateOf(false) }
+    var showSquare by remember { mutableStateOf(false) }
+    var showCircle by remember { mutableStateOf(false) }
+    var showLine by remember { mutableStateOf(false) }
+
 
     // Define a callback to toggle the slider visibility
     val onToggleSlider: (Boolean) -> Unit = { showSlider = it }
+    val onToggleShapes: (Boolean) -> Unit = { showShapes = it }
+    val onToggleTriangle: (Boolean) -> Unit = { showTriangle = it }
+    val onToggleSquare: (Boolean) -> Unit = { showSquare = it }
+    val onToggleCircle: (Boolean) -> Unit = { showCircle = it }
+    val onToggleLine: (Boolean) -> Unit = { showLine = it }
+
+
     var isShapeToolSelected by remember { mutableStateOf(false) }
     var isPencilToolSelected by remember { mutableStateOf(false) }
 
-    val onBucketToolClick: (Boolean)-> Unit = {isShapeToolSelected = it }
     var hide: Boolean = true
     var tapX by remember { mutableStateOf(0f) }
     var tapY by remember { mutableStateOf(0f) }
@@ -113,8 +128,8 @@ fun MainScreen() {
                                     detectDragGestures(
                                         onDrag = { change, dragAmount ->
                                             change.consume()
-                                            if(!isShapeToolSelected){
-                                            currentPath.lineTo(change.position.x, change.position.y)
+                                            if(!showShapes){
+                                                currentPath.lineTo(change.position.x, change.position.y)
                                             }
                                             // Update the canvas in real-time
                                             tempPath.add(Pair(currentPath, currentPathProperties))
@@ -135,20 +150,147 @@ fun MainScreen() {
                                         }
                                     )
                                 }
+
                                 .pointerInput(true) {
                                     detectTapGestures(
                                         onPress = { it ->
-                                            if (tapX == 0f && tapY == 0f) {
-                                                if (isShapeToolSelected) {
+                                            if (showCircle && showShapes){
+                                                if (tapX == 0f && tapY == 0f) {
+                                                    if (showCircle && showShapes) {
+                                                        tapX = it.x
+                                                        tapY = it.y
+                                                    }
+                                                } else {
+                                                    if (showCircle && showShapes) {
+                                                        // Calculate the center and radius of the circle
+                                                        val circleCenterX = (tapX + it.x) / 2
+                                                        val circleCenterY = (tapY + it.y) / 2
+                                                        val radius = Math.abs(tapX - it.x) / 2
+
+                                                        val circlePath = Path().apply {
+                                                            moveTo(circleCenterX + radius, circleCenterY) // Move to the starting point
+                                                            for (angle in 0..360 step 10) { // Draw small line segments to approximate the circle
+                                                                val x = circleCenterX + radius * cos(Math.toRadians(angle.toDouble())).toFloat()
+                                                                val y = circleCenterY + radius * sin(Math.toRadians(angle.toDouble())).toFloat()
+                                                                lineTo(x, y)
+                                                            }
+                                                            close() // Close the path to complete the circle
+                                                        }
+
+// Add the circle path to the paths list
+                                                        paths.add(
+                                                            Pair(
+                                                                circlePath,
+                                                                PathProperties(
+                                                                    color = hue,
+                                                                    strokeWidth = sliderPosition
+                                                                )
+                                                            )
+                                                        )
+                                                    }
+                                                    tapX = 0f
+                                                    tapY = 0f
+                                                }
+                                            }
+                                            else if (showTriangle && showShapes) {
+                                                if (tapX == 0f && tapY == 0f) {
+                                                    if (showShapes) {
+                                                        tapX = it.x
+                                                        tapY = it.y
+                                                    }
+                                                } else {
+                                                    if (showShapes) {
+                                                        // Calculate the vertices of the triangle
+                                                        val vertex1X = tapX
+                                                        val vertex1Y = tapY
+                                                        val vertex2X = it.x
+                                                        val vertex2Y = it.y
+                                                        val centerX = (vertex1X + vertex2X) / 2
+                                                        val centerY = (vertex1Y + vertex2Y) / 2
+                                                        val height = Math.sqrt(Math.pow((vertex2X - vertex1X).toDouble(), 2.0) + Math.pow((vertex2Y - vertex1Y).toDouble(), 2.0)) * Math.sqrt(3.0) / 2
+                                                        val halfBase = Math.sqrt(Math.pow((vertex2X - vertex1X).toDouble(), 2.0) + Math.pow((vertex2Y - vertex1Y).toDouble(), 2.0)) / 2
+
+                                                        val trianglePath = Path().apply {
+                                                            moveTo(centerX.toFloat(), (centerY - height / 2).toFloat())
+                                                            lineTo((centerX + halfBase).toFloat(), (centerY + height / 2).toFloat())
+                                                            lineTo((centerX - halfBase).toFloat(), (centerY + height / 2).toFloat())
+                                                            close() // Close the path to complete the triangle
+                                                        }
+
+                                                        // Add the triangle path to the paths list
+                                                        paths.add(
+                                                            Pair(
+                                                                trianglePath,
+                                                                PathProperties(
+                                                                    color = hue,
+                                                                    strokeWidth = sliderPosition
+                                                                )
+                                                            )
+                                                        )
+                                                    }
+                                                    tapX = 0f
+                                                    tapY = 0f
+                                                }
+
+                                            }
+                                            if (showSquare && showShapes) {
+                                                if (tapX == 0f && tapY == 0f) {
+                                                    // Store the first tap position as the starting point of the square
                                                     tapX = it.x
                                                     tapY = it.y
+                                                } else {
+                                                    // Calculate the center position of the square
+                                                    val centerX = (tapX + it.x) / 2
+                                                    val centerY = (tapY + it.y) / 2
+
+                                                    // Calculate half the width and height of the square
+                                                    val halfWidth = Math.abs(it.x - tapX) / 2
+                                                    val halfHeight = Math.abs(it.y - tapY) / 2
+
+                                                    // Calculate the actual end points of the square based on the center position
+                                                    val startX = centerX - halfWidth
+                                                    val startY = centerY - halfHeight
+                                                    val endX = centerX + halfWidth
+                                                    val endY = centerY + halfHeight
+
+                                                    // Create the square path
+                                                    val squarePath = Path().apply {
+                                                        moveTo(startX, startY)
+                                                        lineTo(endX, startY)
+                                                        lineTo(endX, endY)
+                                                        lineTo(startX, endY)
+                                                        close() // Close the path to complete the square
+                                                    }
+
+                                                    // Add the square path to the paths list
+                                                    paths.add(
+                                                        Pair(
+                                                            squarePath,
+                                                            PathProperties(
+                                                                color = hue,
+                                                                strokeWidth = sliderPosition
+                                                            )
+                                                        )
+                                                    )
+
+                                                    // Reset tap positions for next square
+                                                    tapX = 0f
+                                                    tapY = 0f
                                                 }
-                                            } else {
-                                                if (isShapeToolSelected) {
+
+
+
+                                            }
+                                            if (showLine && showShapes) {
+                                                if (tapX == 0f && tapY == 0f) {
+                                                    // Store the first tap position as the starting point of the line
+                                                    tapX = it.x
+                                                    tapY = it.y
+                                                } else {
+                                                    // Store the second tap position as the ending point of the line
                                                     tapX2 = it.x
                                                     tapY2 = it.y
-                                                }
-                                                if (isShapeToolSelected) {
+                                                    // Draw the line
                                                     paths.add(
                                                         Pair(
                                                             Path().apply {
@@ -158,14 +300,22 @@ fun MainScreen() {
                                                             PathProperties(
                                                                 color = hue,
                                                                 strokeWidth = sliderPosition
-                                                            )))                                                }
+                                                            )
+                                                        )
+                                                    )
+                                                    // Reset tap positions for next line
+                                                    tapX = 0f
+                                                    tapY = 0f
+                                                }
 
-                                                tapX = 0f
-                                                tapY = 0f
                                             }
+
+
+
                                         }
                                     )
                                 }
+
                         ) {
                             // draw the completed paths
                             paths.forEach { (path, property) ->
@@ -212,7 +362,7 @@ fun MainScreen() {
 
                     // first row
                     hide = firstRow(
-                        showSlider,
+                        showSlider, showShapes, onToggleTriangle, onToggleSquare, onToggleCircle, onToggleLine,
                         slider = {
                             Slider(
                                 value = sliderPosition,
@@ -253,8 +403,9 @@ fun MainScreen() {
                             },
                             showSlider,
                             onToggleSlider,
-                            onBucketToolClick,
-                            onPencilToolClick = {isPencilToolSelected = !isPencilToolSelected}
+                            onPencilToolClick = {isPencilToolSelected = !isPencilToolSelected},
+                            onToggleShapes = onToggleShapes,
+                            showShapes = showShapes,
                         )
                     }
                 }
