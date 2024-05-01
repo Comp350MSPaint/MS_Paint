@@ -223,7 +223,7 @@ fun MainScreen() {
                                     inactiveTrackColor = MaterialTheme.colorScheme.secondaryContainer,
                                 ),
                                 steps = 5,
-                                valueRange = 4f..20f,
+                                valueRange = 4f..50f,
 
                                 )
                             Text(
