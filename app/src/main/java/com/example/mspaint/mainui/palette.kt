@@ -40,13 +40,11 @@ fun PalletFunc (
             .padding(13.dp)
             .background(Color.Black)
             .height(100.dp)
-            .width(237.dp)
             .background(Color.Black)
     ){
+        val colorButtonModifier : Modifier = Modifier
+            .size(width = 43.dp,height = 38.dp)
         Row(
-            modifier = Modifier
-                .width(237.dp)
-                .height(50.dp)
         ){
             Box(
                 modifier = Modifier
@@ -55,8 +53,7 @@ fun PalletFunc (
                     onClick = { hue = Red; restoreToHue = hue; paletteState=0 },
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(Red),
-                    modifier = Modifier
-                        .size(width = 47.dp, height = 50.dp)
+                    modifier = colorButtonModifier
                 ) {
 
                 }
@@ -69,8 +66,7 @@ fun PalletFunc (
                     onClick = { hue = Orange; restoreToHue = hue; paletteState = 1},
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(Orange),
-                    modifier = Modifier
-                        .size(width = 47.dp, height = 50.dp)
+                    modifier = colorButtonModifier
                 ) {
 
                 }
@@ -83,8 +79,7 @@ fun PalletFunc (
                     onClick = { hue = Yellow; restoreToHue = hue; paletteState = 2},
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(Yellow),
-                    modifier = Modifier
-                        .size(width = 47.dp, height = 50.dp)
+                    modifier = colorButtonModifier
                 ) {
 
                 }
@@ -97,8 +92,7 @@ fun PalletFunc (
                     onClick = { hue = Green; restoreToHue = hue; paletteState = 3},
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(Green),
-                    modifier = Modifier
-                        .size(width = 47.dp, height = 50.dp)
+                    modifier = colorButtonModifier
                 ) {
 
                 }
@@ -111,8 +105,7 @@ fun PalletFunc (
                     onClick = { hue = Aqua; restoreToHue = hue; paletteState=4 },
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(Aqua),
-                    modifier = Modifier
-                        .size(width = 47.dp, height = 50.dp)
+                    modifier = colorButtonModifier
                 ) {
 
                 }
@@ -120,9 +113,7 @@ fun PalletFunc (
             }
         }
         Row(
-            modifier = Modifier
-                .width(237.dp)
-                .height(50.dp)
+
         ){
             Box(
                 modifier = Modifier
@@ -131,8 +122,7 @@ fun PalletFunc (
                     onClick = { hue = White; restoreToHue = hue; paletteState=5 },
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(White),
-                    modifier = Modifier
-                        .size(width = 47.dp, height = 50.dp)
+                    modifier = colorButtonModifier
                 ) {
 
                 }
@@ -145,8 +135,7 @@ fun PalletFunc (
                     onClick = { hue = Black; restoreToHue = hue; paletteState=6 },
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(Black),
-                    modifier = Modifier
-                        .size(width = 47.dp, height = 50.dp)
+                    modifier = colorButtonModifier
                 ) {
 
                 }
@@ -159,8 +148,7 @@ fun PalletFunc (
                     onClick = { hue = Purple; restoreToHue = hue; paletteState=7 },
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(Purple),
-                    modifier = Modifier
-                        .size(width = 47.dp, height = 50.dp)
+                    modifier = colorButtonModifier
                 ) {
 
                 }
@@ -173,8 +161,7 @@ fun PalletFunc (
                     onClick = { hue = Magenta; restoreToHue = hue; paletteState=8 },
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(Magenta),
-                    modifier = Modifier
-                        .size(width = 47.dp, height = 50.dp)
+                    modifier = colorButtonModifier
                 ) {
 
                 }
@@ -187,8 +174,7 @@ fun PalletFunc (
                     onClick = { hue = Blue; restoreToHue = hue; paletteState=9 },
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(Blue),
-                    modifier = Modifier
-                        .size(width = 47.dp, height = 50.dp)
+                    modifier = colorButtonModifier
                 ) {
 
                 }
