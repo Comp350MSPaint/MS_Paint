@@ -37,7 +37,7 @@ fun ShapesFunc (
     onToggleCircle: (Boolean) -> Unit,
     onToggleLine: (Boolean) -> Unit,
 
-
+    slider: @Composable () -> Unit
     ) {
     Column(
         modifier = Modifier.background(Color.Black)
@@ -192,14 +192,14 @@ fun ShapesFunc (
                 .padding(start = 16.dp), // Adjust padding as needed
             verticalAlignment = Alignment.Top // Align text to the top of the row
         ) {
-            Text(
-                text = "t \n",
-                color = Color.Black,
-                fontSize = 20.sp, // Adjust the text size here
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth() // Fill the entire width of the row
-                    .alignByBaseline() // Align text to the baseline of the row
-            )
+
+                    .weight(5f)
+                    .align(Alignment.CenterVertically)
+            ) {
+                slider()
+            }
         }
 
 

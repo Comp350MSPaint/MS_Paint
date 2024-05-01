@@ -84,7 +84,7 @@ fun firstRow(
                 slider()
             }
             else if (showShapes){
-                ShapesFunc(onToggleTriangle, onToggleSquare, onToggleCircle, onToggleLine)
+                ShapesFunc(onToggleTriangle, onToggleSquare, onToggleCircle, onToggleLine, slider)
             }
             else{
                 PalletFunc()
