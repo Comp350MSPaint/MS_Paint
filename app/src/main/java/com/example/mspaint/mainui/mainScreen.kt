@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,8 +42,8 @@ import com.example.mspaint.canvasObjectData.hue
 import com.example.mspaint.canvasObjectData.pencilWidth
 import com.example.mspaint.ui.theme.PureBlack
 
-var toolbarState by mutableStateOf(0)
-var paletteState by mutableStateOf(0)
+var toolbarState by mutableIntStateOf(0)
+var paletteState by mutableIntStateOf(0)
 @Composable
 fun MainScreen() {
     // list of lines
@@ -261,17 +262,19 @@ fun MainScreen() {
 
         }
     }
-    Box (
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        PaletteImages(
-           modifier = Modifier
-                .padding(80.dp)
-                .padding(bottom = 25.dp)
-                .align(Alignment.BottomCenter),
-            paletteState
-        )
+    if (!showSlider) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            PaletteImages(
+                modifier = Modifier
+                    .padding(80.dp)
+                    .padding(bottom = 25.dp)
+                    .align(Alignment.BottomCenter),
+                paletteState
+            )
+        }
     }
     if (!hide) {
         Box(
