@@ -57,7 +57,7 @@ fun firstRow(
                     .size(width = 53.dp, height = 65.dp)
             ) {
                 OutlinedButton(
-                    onClick = { save(); toolbarState = 1 },
+                    onClick = { save()},
                     border = BorderStroke(2.dp, Color.Black),
                     shape = RectangleShape,
                     modifier = Modifier.size(width = 50.dp, height = 65.dp)
