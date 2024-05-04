@@ -486,6 +486,7 @@ private fun Bitmap.saveToDisk() {
     val fileName = "test2.png"
     val filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
     val directory = File(filePath, "DoddleDoodle")
+    val values = ContentValues()
 
     if (!directory.exists()) {
         directory.mkdirs()
@@ -493,21 +494,6 @@ private fun Bitmap.saveToDisk() {
     val file = File(directory,fileName)
 
     file.writeBitmap(this, Bitmap.CompressFormat.PNG,100)
-
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-        this.contentResolver?.also {
-            val contentValues = ContentValues().apply {
-                put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
-                put(MediaStore.Images.Media.MIME_TYPE, "image/png")
-                put(
-                    MediaStore.Images.Media.RELATIVE_PATH,
-                    "${Environment.DIRECTORY_PICTURES}/${directory.name}"
-                )
-            }
-        }
-        val imageUri : Uri? =  resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-    }
-
 
 }
 
