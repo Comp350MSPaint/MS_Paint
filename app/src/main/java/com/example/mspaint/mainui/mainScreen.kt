@@ -3,6 +3,7 @@ package com.example.mspaint.mainui
 import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import androidx.compose.ui.platform.LocalDensity
 import android.content.res.Resources
 import android.graphics.Bitmap
@@ -59,6 +60,7 @@ import com.example.mspaint.canvasObjectData.hue
 import com.example.mspaint.canvasObjectData.pencilWidth
 import com.example.mspaint.ui.theme.PureBlack
 import androidx.compose.ui.unit.LayoutDirection
+import com.example.mspaint.MainActivity
 import java.io.File
 import java.io.FileOutputStream
 import kotlin.math.cos
@@ -433,7 +435,7 @@ fun MainScreen() {
                             val realBitmap = Bitmap.createBitmap(bitmap.width,bitmap.height,Bitmap.Config.ARGB_8888)
                             val tempCanvas = android.graphics.Canvas(realBitmap)
                             tempCanvas.drawBitmap(bitmap.asAndroidBitmap(),0f,0f,null)
-                            realBitmap.saveToDisk()
+                            realBitmap.saveToDisk(MainActivity.appContext)
                         }
                     )
 
@@ -482,7 +484,9 @@ fun MainScreen() {
     }
 }
 
-private fun Bitmap.saveToDisk() {
+
+
+private fun Bitmap.saveToDisk(context: Context) {
     val fileName = "test2.png"
     val filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
     val directory = File(filePath, "DoddleDoodle")
@@ -495,7 +499,20 @@ private fun Bitmap.saveToDisk() {
 
     file.writeBitmap(this, Bitmap.CompressFormat.PNG,100)
 
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        val contentValues = ContentValues().apply {
+            put(MediaStore.Images.Media.DISPLAY_NAME,file.name)
+            put(MediaStore.Images.Media.MIME_TYPE, "image/png")
+            put(MediaStore.Images.Media.RELATIVE_PATH, "${Environment.DIRECTORY_PICTURES}/${directory.name}")
+        }
+        context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,contentValues)
+    }
+    else {
+        context.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)))
+    }
+
 }
+
 
 private fun File.writeBitmap(bitmap: Bitmap, format: Bitmap.CompressFormat, quality: Int) {
     outputStream().use {out->
