@@ -13,10 +13,9 @@ import java.io.File
 import java.lang.Exception
 
 fun Bitmap.saveToDisk(context: Context) {
-    val fileName = "test2.png"
+    val fileName = "doodle_${System.currentTimeMillis()}.png"
     val filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
     val directory = File(filePath, "DoddleDoodle")
-    val values = ContentValues()
 
     if (!directory.exists()) {
         directory.mkdirs()
@@ -27,6 +26,7 @@ fun Bitmap.saveToDisk(context: Context) {
     try {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             val contentValues = ContentValues().apply {
+                put(MediaStore.Images.Media.TITLE,file.name)
                 put(MediaStore.Images.Media.DISPLAY_NAME, file.name)
                 put(MediaStore.Images.Media.MIME_TYPE, "image/png")
                 put(
@@ -39,7 +39,10 @@ fun Bitmap.saveToDisk(context: Context) {
                 contentValues
             )
         } else {
-            context.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)))
+            val scanIntent = Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE").apply {
+                data = Uri.fromFile(file)
+            }
+            context.sendBroadcast(scanIntent)
         }
         Toast.makeText(context, "File saved to Photos", Toast.LENGTH_SHORT).show()
     } catch (e: Exception) {
@@ -52,5 +55,6 @@ private fun File.writeBitmap(bitmap: Bitmap, format: Bitmap.CompressFormat, qual
     outputStream().use {out->
         bitmap.compress(format,quality,out)
         out.flush()
+        out.close()
     }
 }
