@@ -1,5 +1,15 @@
 package com.example.mspaint.mainui
 
+import android.content.ContentResolver
+import android.content.ContentValues
+import android.content.Context
+import androidx.compose.ui.platform.LocalDensity
+import android.content.res.Resources
+import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Build
+import android.os.Environment
+import android.provider.MediaStore
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,19 +39,28 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.compose.ui.graphics.drawscope.CanvasDrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.mspaint.R
 import com.example.mspaint.canvasObjectData.PathProperties
 import com.example.mspaint.canvasObjectData.hue
 import com.example.mspaint.canvasObjectData.pencilWidth
 import com.example.mspaint.ui.theme.PureBlack
+import androidx.compose.ui.unit.LayoutDirection
+import java.io.File
+import java.io.FileOutputStream
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -49,6 +68,16 @@ var toolbarState by mutableIntStateOf(0)
 var paletteState by mutableIntStateOf(0)
 @Composable
 fun MainScreen() {
+
+    val canvasWidth: Dp = 350.dp
+    val canvasHeight: Dp = 500.dp
+
+    val drawScope = CanvasDrawScope()
+    val size = Size(350.dpToFloat(),500.dpToFloat())
+    val bitmap = ImageBitmap(size.width.toInt(),size.height.toInt())
+    val canvas = androidx.compose.ui.graphics.Canvas(bitmap)
+
+
     // list of lines
     val paths = remember {
         mutableStateListOf<Pair<Path,PathProperties>>()
@@ -122,7 +151,7 @@ fun MainScreen() {
                         Canvas(
                             // sets up the canvas
                             modifier = Modifier
-                                .size(width = 350.dp, height = 500.dp)
+                                .size(canvasWidth, canvasHeight)
                                 .background(color = Color.White)
                                 .pointerInput(true) {
                                     detectDragGestures(
@@ -381,6 +410,30 @@ fun MainScreen() {
 
                             )
                             pencilWidth = sliderPosition
+                        },
+                        save = {
+                            drawScope.draw(
+                                density = Density(1f),
+                                layoutDirection = LayoutDirection.Ltr,
+                                canvas = canvas,
+                                size = size,
+                            ) {
+                                paths.forEach { (path, property) ->
+                                    drawPath(
+                                        color = property.color,
+                                        path = path,
+                                        style = Stroke(
+                                            width = property.strokeWidth,
+                                            cap = property.strokeCap,
+                                            join = property.strokeJoin
+                                        )
+                                    )
+                                }
+                            }
+                            val realBitmap = Bitmap.createBitmap(bitmap.width,bitmap.height,Bitmap.Config.ARGB_8888)
+                            val tempCanvas = android.graphics.Canvas(realBitmap)
+                            tempCanvas.drawBitmap(bitmap.asAndroidBitmap(),0f,0f,null)
+                            realBitmap.saveToDisk()
                         }
                     )
 
@@ -429,6 +482,45 @@ fun MainScreen() {
     }
 }
 
+private fun Bitmap.saveToDisk() {
+    val fileName = "test2.png"
+    val filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+    val directory = File(filePath, "DoddleDoodle")
+
+    if (!directory.exists()) {
+        directory.mkdirs()
+    }
+    val file = File(directory,fileName)
+
+    file.writeBitmap(this, Bitmap.CompressFormat.PNG,100)
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        this.contentResolver?.also {
+            val contentValues = ContentValues().apply {
+                put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
+                put(MediaStore.Images.Media.MIME_TYPE, "image/png")
+                put(
+                    MediaStore.Images.Media.RELATIVE_PATH,
+                    "${Environment.DIRECTORY_PICTURES}/${directory.name}"
+                )
+            }
+        }
+        val imageUri : Uri? =  resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+    }
+
+
+}
+
+private fun File.writeBitmap(bitmap: Bitmap, format: Bitmap.CompressFormat, quality: Int) {
+    outputStream().use {out->
+        bitmap.compress(format,quality,out)
+        out.flush()
+    }
+}
+
+private fun Int.dpToFloat(): Float {
+   return (this * Resources.getSystem().displayMetrics.density)
+}
 
 
 @Preview

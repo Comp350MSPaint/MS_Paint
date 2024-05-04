@@ -36,9 +36,8 @@ fun firstRow(
     onToggleSquare: (Boolean) -> Unit,
     onToggleCircle: (Boolean) -> Unit,
     onToggleLine: (Boolean) -> Unit,
-
-
-    slider: @Composable () -> Unit
+    slider: @Composable () -> Unit,
+    save: ()->Unit,
 ): Boolean {
     var hidden by remember{ mutableStateOf(false) }
     Row(
@@ -58,7 +57,7 @@ fun firstRow(
                     .size(width = 53.dp, height = 65.dp)
             ) {
                 OutlinedButton(
-                    onClick = { pencil(); toolbarState = 1 },
+                    onClick = { save(); toolbarState = 1 },
                     border = BorderStroke(2.dp, Color.Black),
                     shape = RectangleShape,
                     modifier = Modifier.size(width = 50.dp, height = 65.dp)
