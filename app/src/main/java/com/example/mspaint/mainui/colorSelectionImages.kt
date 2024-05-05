@@ -43,7 +43,7 @@ fun PaletteImages (
             modifier = modifier
         )
         6-> Image(
-            painter = painterResource(R.drawable.pallet_no),
+            painter = painterResource(R.drawable.pallet_black),
             contentDescription = "black",
             modifier = modifier
         )

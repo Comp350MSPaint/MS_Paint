@@ -25,12 +25,18 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.mspaint.R
+import com.example.mspaint.Screen
 import com.example.mspaint.mainui.MainScreen
 import com.example.mspaint.ui.theme.Black
 
 @Composable
-fun MainMenuScreen() {
+fun MainMenuScreen(
+    navController: NavController
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -53,7 +59,7 @@ fun MainMenuScreen() {
                     .align(Alignment.CenterHorizontally)
             ) {
                 Button(
-                    onClick = {  },//TODO:"NEW"
+                    onClick = { navController.navigate(route = Screen.mainScreen.route) },//"NEW": Goto mainScreen.
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(Color.Transparent),
                     modifier = Modifier
@@ -144,6 +150,6 @@ fun MainMenuScreen() {
 @Preview
 @Composable
 fun MainMenuScreenPreview() {
-    MainMenuScreen()
+    MainMenuScreen(navController = rememberNavController())
 }
 
