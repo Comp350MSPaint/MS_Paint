@@ -25,8 +25,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mspaint.R
+import com.example.mspaint.canvasObjectData.hue
 import com.example.mspaint.tools.eraser
 import com.example.mspaint.tools.pencil
+import com.example.mspaint.tools.restoreToHue
 import com.example.mspaint.ui.theme.Grey
 
 @Composable
@@ -111,7 +113,7 @@ fun SecondRow(
         ) {
             Button(
 
-                onClick = { pencil(); toolbarState= 5; toolSelected = true;onToggleSlider(true); onToggleShapes(false);},
+                onClick = { pencil(); hue = restoreToHue; toolbarState= 5; toolSelected = true;onToggleSlider(true); onToggleShapes(false);},
 
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
@@ -157,7 +159,7 @@ fun SecondRow(
             modifier = reusableModifier
         ) {
             Button(
-                onClick = { onToggleShapes(true);onToggleSlider(false); toolbarState = 4},
+                onClick = { onToggleShapes(true);hue = restoreToHue; onToggleSlider(false); toolbarState = 4},
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
