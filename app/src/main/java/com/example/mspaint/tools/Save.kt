@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -49,6 +50,13 @@ fun Bitmap.saveToDisk(context: Context) {
         e.printStackTrace()
         Toast.makeText(context, "Failed to save file", Toast.LENGTH_SHORT).show()
     }
+    MediaScannerConnection.scanFile(
+        context,
+        arrayOf(file.toString()),
+        arrayOf("image/png"),
+        null
+    )
+
 }
 
 private fun File.writeBitmap(bitmap: Bitmap, format: Bitmap.CompressFormat, quality: Int) {
