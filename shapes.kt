@@ -44,7 +44,7 @@ fun ShapesFunc (
     onToggleLine: (Boolean) -> Unit,
 
     slider: @Composable () -> Unit
-    ) {
+) {
     var triangleToggled by remember { mutableStateOf(false) }
     var squareToggled by remember { mutableStateOf(false) }
     var circleToggled by remember { mutableStateOf(false) }
@@ -89,22 +89,20 @@ fun ShapesFunc (
 
                 }
                 Image(
-                    painter = painterResource(R.drawable.triangle),
+                    painter = if (triangleToggled) {
+                        painterResource(R.drawable.small_tri_on) // Use square image if squareToggled is true
+                    } else {
+                        painterResource(R.drawable.small_tri_off) // Use triangle image if squareToggled is false
+                    },
                     contentDescription = "linee",
                     modifier = Modifier
-                            .size(width = 61.dp, height = 60.dp)
+                        .size(width = 61.dp, height = 60.dp)
                         .border(
                             width = 2.dp,
                             color = Color.Black),
-                contentScale = ContentScale.FillBounds // Adjust cont
+                    contentScale = ContentScale.FillBounds // Adjust cont
                 )
-                if (triangleToggled){
-                Box(
-                    modifier = Modifier
-                        .size(20.dp)
-                        .align(Alignment.Center)
-                        .background(Color.Yellow)
-                )}
+
             }
             Box(
                 modifier = Modifier
@@ -133,22 +131,20 @@ fun ShapesFunc (
 
                 }
                 Image(
-                    painter = painterResource(R.drawable.circle),
+                    painter = if (circleToggled) {
+                        painterResource(R.drawable.small_cir_on) // Use square image if squareToggled is true
+                    } else {
+                        painterResource(R.drawable.small_cir_off) // Use triangle image if squareToggled is false
+                    },
                     contentDescription = "linee",
                     modifier = Modifier
-                        .size(width = 61.dp, height = 60.dp)
+                        .size(width = 63.dp, height = 60.dp)
                         .border(
                             width = 2.dp,
                             color = Color.Black),
                     contentScale = ContentScale.FillBounds // Adjust cont
                 )
-                if (circleToggled){
-                    Box(
-                        modifier = Modifier
-                            .size(20.dp)
-                            .align(Alignment.Center)
-                            .background(Color.Yellow)
-                    )}
+
 
             }
             Box(
@@ -169,7 +165,7 @@ fun ShapesFunc (
                     shape = RectangleShape,
                     //colors = ButtonDefaults.buttonColors(Red),
                     modifier = Modifier
-                        .size(width = 61.dp, height = 60.dp)
+                        .size(width = 64.dp, height = 60.dp)
                         .border(
                             width = 2.dp,
                             color = Color.Black)
@@ -178,22 +174,20 @@ fun ShapesFunc (
 
                 }
                 Image(
-                    painter = painterResource(R.drawable.square),
+                    painter = if (squareToggled) {
+                        painterResource(R.drawable.small_squ_on) // Use square image if squareToggled is true
+                    } else {
+                        painterResource(R.drawable.small_squ_off) // Use triangle image if squareToggled is false
+                    },
                     contentDescription = "linee",
                     modifier = Modifier
-                        .size(width = 61.dp, height = 60.dp)
+                        .size(width = 64.dp, height = 60.dp)
                         .border(
                             width = 2.dp,
                             color = Color.Black),
                     contentScale = ContentScale.FillBounds // Adjust cont
                 )
-                if (squareToggled){
-                    Box(
-                        modifier = Modifier
-                            .size(20.dp)
-                            .align(Alignment.Center)
-                            .background(Color.Yellow)
-                    )}
+
 
             }
             Box(
@@ -214,7 +208,7 @@ fun ShapesFunc (
                     shape = RectangleShape,
                     //colors = ButtonDefaults.buttonColors(Red),
                     modifier = Modifier
-                        .size(width = 61.dp, height = 60.dp)
+                        .size(width = 63.dp, height = 60.dp)
                         .border(
                             width = 2.dp,
                             color = Color.Black)
@@ -223,7 +217,11 @@ fun ShapesFunc (
 
                 }
                 Image(
-                    painter = painterResource(R.drawable.linee),
+                    painter = if (lineToggled) {
+                        painterResource(R.drawable.small_lin_on) // Use square image if squareToggled is true
+                    } else {
+                        painterResource(R.drawable.small_lin_off) // Use triangle image if squareToggled is false
+                    },
                     contentDescription = "linee",
                     modifier = Modifier
                         .size(width = 61.dp, height = 60.dp)
@@ -232,13 +230,7 @@ fun ShapesFunc (
                             color = Color.Black),
                     contentScale = ContentScale.FillBounds // Adjust cont
                 )
-                if (lineToggled){
-                    Box(
-                        modifier = Modifier
-                            .size(20.dp)
-                            .align(Alignment.Center)
-                            .background(Color.Yellow)
-                    )}
+
 
             }
 
