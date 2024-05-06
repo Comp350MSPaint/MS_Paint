@@ -395,13 +395,9 @@ fun MainScreen(
                                     inactiveTrackColor = MaterialTheme.colorScheme.secondaryContainer,
                                 ),
                                 steps = 5,
-                                valueRange = 4f..50f,
+                                valueRange = 4f..75f,
 
                                 )
-                            Text(
-                                text = sliderPosition.toString()
-
-                            )
                             pencilWidth = sliderPosition
                         },
                         save = {

@@ -66,7 +66,7 @@ fun firstRow(
 
                 }
                 Image(
-                    painter = painterResource(R.drawable.options),
+                    painter = painterResource(R.drawable.options_new),
                     contentDescription = "options",
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
