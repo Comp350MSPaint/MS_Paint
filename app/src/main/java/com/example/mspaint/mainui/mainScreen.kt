@@ -37,6 +37,8 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.mspaint.R
 import com.example.mspaint.canvasObjectData.PathProperties
 import com.example.mspaint.canvasObjectData.hue
@@ -48,7 +50,9 @@ import kotlin.math.sin
 var toolbarState by mutableIntStateOf(0)
 var paletteState by mutableIntStateOf(0)
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    navController: NavController
+) {
     // list of lines
     val paths = remember {
         mutableStateListOf<Pair<Path,PathProperties>>()
@@ -434,5 +438,5 @@ fun MainScreen() {
 @Preview
 @Composable
 fun MainScreenPreview() {
-    MainScreen()
+    MainScreen(navController = rememberNavController())
 }

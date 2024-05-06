@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 import com.example.mspaint.R
 import com.example.mspaint.tools.eraser
 import com.example.mspaint.tools.pencil
@@ -175,5 +176,6 @@ fun SecondRow(
 @Preview
 @Composable
 fun SecondRowPreview() {
-    MainScreen()
+    MainScreen(navController = rememberNavController())
 }
+

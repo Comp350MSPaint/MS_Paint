@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 import com.example.mspaint.canvasObjectData.hue
 import com.example.mspaint.tools.pencil
 import com.example.mspaint.tools.restoreToHue
@@ -188,5 +189,5 @@ fun PalletFunc (
 @Preview
 @Composable
 fun PalettePreview() {
-    MainScreen()
+    MainScreen(navController = rememberNavController())
 }
