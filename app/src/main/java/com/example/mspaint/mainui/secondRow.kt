@@ -26,10 +26,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.mspaint.R
-import com.example.mspaint.canvasObjectData.hue
 import com.example.mspaint.tools.eraser
 import com.example.mspaint.tools.pencil
-import com.example.mspaint.tools.restoreToHue
 import com.example.mspaint.ui.theme.Grey
 
 @Composable
@@ -38,8 +36,10 @@ fun SecondRow(
     redo: ()-> Unit,
     showSlider: Boolean,
     onToggleSlider: (Boolean) -> Unit,
-    onBucketToolClick: (Boolean)->Unit,
+    onToggleShapes: (Boolean) -> Unit,
+
     onPencilToolClick: () -> Unit,
+    showShapes: Boolean
 ) {
     var toolSelected by remember { mutableStateOf(false) }
     Row(
@@ -77,7 +77,7 @@ fun SecondRow(
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
-                
+
             }
             Image(
                 painter = painterResource(R.drawable.redo),
@@ -88,14 +88,15 @@ fun SecondRow(
             modifier = reusableModifier
         ) {
             Button(
-                onClick = { onToggleSlider(false);
+                onClick = { onToggleSlider(false)
+                    onToggleShapes(false);
                     if (toolSelected) {
                         toolbarState = 0
                     }
                     else {
 
                     }
-                          },
+                },
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
@@ -104,30 +105,30 @@ fun SecondRow(
             //Image(
             //    painter = painterResource(R.drawable.pallet),
             //    contentDescription = "pallet"
-           // )
+            // )
         }
         Box(
             modifier = reusableModifier
         ) {
             Button(
 
-                onClick = { pencil(); toolbarState= 5; hue = restoreToHue; toolSelected = true;onToggleSlider(true);onBucketToolClick(false)},
-                                                    //restoreToHue makes the color back to "non-eraser" color
+                onClick = { pencil(); toolbarState= 5; toolSelected = true;onToggleSlider(true); onToggleShapes(false);},
+
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
 
             }
-          //  Image(
-          //      painter = painterResource(R.drawable.pencil),
-          //      contentDescription = "pencil"
-          //  )
+            //  Image(
+            //      painter = painterResource(R.drawable.pencil),
+            //      contentDescription = "pencil"
+            //  )
         }
         Box(
             modifier = reusableModifier
         ) {
             Button(
-                onClick = { eraser(); toolbarState = 3; toolSelected = true; onToggleSlider(true);onBucketToolClick(false)},
+                onClick = { eraser(); toolbarState = 3; toolSelected = true; onToggleSlider(true); onToggleShapes(false);},
                 shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
@@ -157,16 +158,16 @@ fun SecondRow(
             modifier = reusableModifier
         ) {
             Button(
-                onClick = { onBucketToolClick(true); toolbarState = 4; hue = restoreToHue; onToggleSlider(true)},
-                shape = RectangleShape,                             //restoreToHue makes the color back to "non-eraser" color
+                onClick = { onToggleShapes(true);onToggleSlider(false); toolbarState = 4},
+                shape = RectangleShape,
                 modifier = Modifier.size(width = 80.dp, height = 65.dp)
             ) {
 
             }
-           // Image(
-           //     painter = painterResource(R.drawable.shapes),
-           //     contentDescription = "shape"
-           // )
+            // Image(
+            //     painter = painterResource(R.drawable.shapes),
+            //     contentDescription = "shape"
+            // )
         }
 
     }
@@ -177,3 +178,4 @@ fun SecondRow(
 fun SecondRowPreview() {
     MainScreen(navController = rememberNavController())
 }
+
