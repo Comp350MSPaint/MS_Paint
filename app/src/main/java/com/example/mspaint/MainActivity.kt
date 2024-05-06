@@ -10,20 +10,29 @@ import android.os.Environment
 import android.provider.MediaStore
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instance
 import com.example.mspaint.mainui.MainScreen
 import com.example.mspaint.ui.theme.MSPaintTheme
+import java.security.AccessController
 import java.io.File
 
 class MainActivity : ComponentActivity() {
 
+
+
+    lateinit var navController: NavHostController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         MainActivity.appContext = applicationContext
         setContent {
             MSPaintTheme {
-                MainScreen()
+                //MainScreen()
+
+                navController = rememberNavController()
+                SetupNavGragh(navController = navController)
             }
         }
     }

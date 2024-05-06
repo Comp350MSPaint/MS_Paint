@@ -43,6 +43,9 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.mspaint.R
 import com.example.mspaint.MainActivity
 import com.example.mspaint.canvasObjectData.PathProperties
 import com.example.mspaint.canvasObjectData.hue
@@ -55,7 +58,9 @@ import kotlin.math.sin
 var toolbarState by mutableIntStateOf(0)
 var paletteState by mutableIntStateOf(0)
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    navController: NavController
+) {
 
     val canvasWidth: Dp = 350.dp
     val canvasHeight: Dp = 500.dp
@@ -482,5 +487,5 @@ private fun Int.dpToFloat(): Float {
 @Preview
 @Composable
 fun MainScreenPreview() {
-    MainScreen()
+    MainScreen(navController = rememberNavController())
 }
