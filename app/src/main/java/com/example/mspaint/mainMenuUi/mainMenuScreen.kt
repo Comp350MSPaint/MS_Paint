@@ -2,6 +2,7 @@ package com.example.mspaint.mainMenuUi
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -39,107 +40,131 @@ fun MainMenuScreen(
 ) {
     Box(
         modifier = Modifier
-            .fillMaxSize()
+           // .fillMaxSize()
             .background(color = Color.LightGray)
         )
     {
         Column(modifier = Modifier
             .padding(40.dp)
-            .align(Alignment.TopCenter)
+            .fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ){
-            Image(
-                painter = painterResource(R.drawable.title_menu),
-                contentDescription = "title",
-                        modifier = Modifier
-                            .offset(y = 10.dp)
+
+            val rowModifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .padding(vertical = 5.dp)
+
+            Row (
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    // .weight(2f)
+                    .padding(bottom = 15.dp)
             )
-
-            Box(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-            ) {
-                Button(
-                    onClick = { navController.navigate(route = Screen.mainScreen.route) },//"NEW": Goto mainScreen.
-                    shape = RectangleShape,
-                    colors = ButtonDefaults.buttonColors(Color.Transparent),
-                    modifier = Modifier
-                        .size(width = 310.dp, height = 85.dp)
-                        .offset(y = 60.dp)
-                ) {}
+            {
                 Image(
-                    painter = painterResource(R.drawable.new_menu),
-                    contentDescription = "NEW",
-                    contentScale = ContentScale.FillBounds,
-                    modifier = Modifier
-                        .size(width = 310.dp, height = 85.dp)
-                        .offset(y = 60.dp)
+                    painter = painterResource(R.drawable.title_menu),
+                    contentDescription = "title",
+                    modifier = rowModifier
+
+                )
+            }
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = rowModifier
+            ) {
+                Box() {
+                    Button(
+                        onClick = { navController.navigate(route = Screen.mainScreen.route) },//"NEW": Goto mainScreen.
+                        shape = RectangleShape,
+                        colors = ButtonDefaults.buttonColors(Color.Transparent),
+                        modifier = Modifier
+                            .fillMaxSize()
+                        //.offset(y = 60.dp)
+                    ) {}
+                    Image(
+                        painter = painterResource(R.drawable.new_menu),
+                        contentDescription = "NEW",
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier
+                        // .size(width = 310.dp, height = 85.dp)
+                        // .offset(y = 60.dp)
                     )
+                }
             }
 
-            Box(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
+            Row(
+                modifier = rowModifier
             ) {
-                Button(
-                    onClick = { navController.navigate(route = Screen.loadScreen.route) },//TODO:"LOAD"
-                    shape = RectangleShape,
-                    colors = ButtonDefaults.buttonColors(Color.Transparent),
-                    modifier = Modifier
-                        .size(width = 310.dp, height = 85.dp)
-                        .offset(y = 100.dp)
-                ) {}
-                Image(
-                    painter = painterResource(R.drawable.load_menu),
-                    contentDescription = "LOAD",
-                    contentScale = ContentScale.FillBounds,
-                    modifier = Modifier
-                        .size(width = 310.dp, height = 85.dp)
-                        .offset(y = 100.dp)
-                )
+                Box() {
+                    Button(
+                        onClick = { navController.navigate(route = Screen.loadScreen.route) },//TODO:"LOAD"
+                        shape = RectangleShape,
+                        colors = ButtonDefaults.buttonColors(Color.Transparent),
+                        modifier = Modifier
+                            .fillMaxSize()
+                        //.size(width = 310.dp, height = 85.dp)
+                        //.offset(y = 100.dp)
+                    ) {}
+                    Image(
+                        painter = painterResource(R.drawable.load_menu),
+                        contentDescription = "LOAD",
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier
+                        //.size(width = 310.dp, height = 85.dp)
+                        //.offset(y = 100.dp)
+                    )
+                }
             }
 
-            Box(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
+            Row(
+                modifier = rowModifier
             ) {
-                Button(
-                    onClick = {  },//TODO:"SHARE"
-                    shape = RectangleShape,
-                    colors = ButtonDefaults.buttonColors(Color.Transparent),
-                    modifier = Modifier
-                        .size(width = 310.dp, height = 85.dp)
-                        .offset(y = 140.dp)
-                ) {}
-                Image(
-                    painter = painterResource(R.drawable.share_menu),
-                    contentDescription = "SHARE",
-                    contentScale = ContentScale.FillBounds,
-                    modifier = Modifier
-                        .size(width = 310.dp, height = 85.dp)
-                        .offset(y = 140.dp)
-                )
+                Box() {
+                    Button(
+                        onClick = { },//TODO:"SHARE"
+                        shape = RectangleShape,
+                        colors = ButtonDefaults.buttonColors(Color.Transparent),
+                        modifier = Modifier
+                            .fillMaxSize()
+                        //.size(width = 310.dp, height = 85.dp)
+                        // .offset(y = 140.dp)
+                    ) {}
+                    Image(
+                        painter = painterResource(R.drawable.share_menu),
+                        contentDescription = "SHARE",
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier
+                        //.size(width = 310.dp, height = 85.dp)
+                        //.offset(y = 140.dp)
+                    )
+                }
             }
 
-            Box(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
+            Row(
+                modifier = rowModifier
             ) {
-                Button(
-                    onClick = {  },//TODO:"OPTIONS"
-                    shape = RectangleShape,
-                    colors = ButtonDefaults.buttonColors(Color.Transparent),
-                    modifier = Modifier
-                        .size(width = 310.dp, height = 85.dp)
-                        .offset(y = 180.dp)
-                ) {}
-                Image(
-                    painter = painterResource(R.drawable.options_menu),
-                    contentDescription = "OPTIONS",
-                    contentScale = ContentScale.FillBounds,
-                    modifier = Modifier
-                        .size(width = 310.dp, height = 85.dp)
-                        .offset(y = 180.dp)
-                )
+                Box() {
+                    Button(
+                        onClick = { },//TODO:"OPTIONS"
+                        shape = RectangleShape,
+                        colors = ButtonDefaults.buttonColors(Color.Transparent),
+                        modifier = Modifier
+                            .fillMaxSize()
+                        //.size(width = 310.dp, height = 85.dp)
+                        //.offset(y = 180.dp)
+                    ) {}
+                    Image(
+                        painter = painterResource(R.drawable.options_menu),
+                        contentDescription = "OPTIONS",
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier
+                        //.size(width = 310.dp, height = 85.dp)
+                        //.offset(y = 180.dp)
+                    )
+                }
             }
 
         }//All 4 images inside this column.
