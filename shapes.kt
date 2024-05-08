@@ -256,5 +256,8 @@ fun ShapesFunc (
 }
 
 
-
-
+@Preview
+@Composable
+fun ShapesPreview() {
+    MainScreen()
+}

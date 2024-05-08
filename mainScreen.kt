@@ -1,7 +1,5 @@
 package com.example.mspaint.mainui
 
-import android.content.res.Resources
-import android.graphics.Bitmap
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -14,63 +12,38 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.asAndroidBitmap
-import androidx.compose.ui.graphics.drawscope.CanvasDrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Density
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.example.mspaint.R
-import com.example.mspaint.MainActivity
 import com.example.mspaint.canvasObjectData.PathProperties
 import com.example.mspaint.canvasObjectData.hue
 import com.example.mspaint.canvasObjectData.pencilWidth
-import com.example.mspaint.tools.saveToDisk
 import com.example.mspaint.ui.theme.PureBlack
 import kotlin.math.cos
 import kotlin.math.sin
 
-var toolbarState by mutableIntStateOf(0)
-var paletteState by mutableIntStateOf(0)
+var toolbarState by mutableStateOf(0)
 @Composable
-fun MainScreen(
-    navController: NavController
-) {
-
-    val canvasWidth: Dp = 350.dp
-    val canvasHeight: Dp = 500.dp
-
-    val drawScope = CanvasDrawScope()
-    val size = Size(350.dpToFloat(),500.dpToFloat())
-    val bitmap = ImageBitmap(size.width.toInt(),size.height.toInt())
-    val canvas = androidx.compose.ui.graphics.Canvas(bitmap)
-
-
+fun MainScreen() {
     // list of lines
     val paths = remember {
         mutableStateListOf<Pair<Path,PathProperties>>()
@@ -144,7 +117,7 @@ fun MainScreen(
                         Canvas(
                             // sets up the canvas
                             modifier = Modifier
-                                .size(canvasWidth, canvasHeight)
+                                .size(width = 350.dp, height = 500.dp)
                                 .background(color = Color.White)
                                 .pointerInput(true) {
                                     detectDragGestures(
@@ -395,34 +368,14 @@ fun MainScreen(
                                     inactiveTrackColor = MaterialTheme.colorScheme.secondaryContainer,
                                 ),
                                 steps = 5,
-                                valueRange = 4f..75f,
+                                valueRange = 4f..20f,
 
                                 )
+                            Text(
+                                text = sliderPosition.toString()
+
+                            )
                             pencilWidth = sliderPosition
-                        },
-                        save = {
-                            drawScope.draw(
-                                density = Density(1f),
-                                layoutDirection = LayoutDirection.Ltr,
-                                canvas = canvas,
-                                size = size,
-                            ) {
-                                paths.forEach { (path, property) ->
-                                    drawPath(
-                                        color = property.color,
-                                        path = path,
-                                        style = Stroke(
-                                            width = property.strokeWidth,
-                                            cap = property.strokeCap,
-                                            join = property.strokeJoin
-                                        )
-                                    )
-                                }
-                            }
-                            val realBitmap = Bitmap.createBitmap(bitmap.width,bitmap.height,Bitmap.Config.ARGB_8888)
-                            val tempCanvas = android.graphics.Canvas(realBitmap)
-                            tempCanvas.drawBitmap(bitmap.asAndroidBitmap(),0f,0f,null)
-                            realBitmap.saveToDisk(MainActivity.appContext)
                         }
                     )
 
@@ -473,15 +426,8 @@ fun MainScreen(
 
 
 
-
-
-private fun Int.dpToFloat(): Float {
-   return (this * Resources.getSystem().displayMetrics.density)
-}
-
-
 @Preview
 @Composable
 fun MainScreenPreview() {
-    MainScreen(navController = rememberNavController())
+    MainScreen()
 }
