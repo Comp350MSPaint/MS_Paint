@@ -1,14 +1,14 @@
 package com.example.mspaint.mainui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
@@ -19,7 +19,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.mspaint.canvasObjectData.hue
-import com.example.mspaint.tools.pencil
 import com.example.mspaint.tools.restoreToHue
 import com.example.mspaint.ui.theme.Aqua
 import com.example.mspaint.ui.theme.Black
@@ -31,6 +30,8 @@ import com.example.mspaint.ui.theme.Purple
 import com.example.mspaint.ui.theme.Red
 import com.example.mspaint.ui.theme.White
 import com.example.mspaint.ui.theme.Yellow
+import com.example.mspaint.ui.theme.Grey
+
 
 @Composable
 fun PalletFunc (
@@ -39,13 +40,14 @@ fun PalletFunc (
     Column(
         modifier = Modifier
             .padding(13.dp)
-            .background(Color.Black)
+            .background(Grey)
             .height(100.dp)
-            .background(Color.Black)
     ){
         val colorButtonModifier : Modifier = Modifier
-            .size(width = 43.dp,height = 38.dp)
+            .size(width = 42.dp,height = 38.dp)
         Row(
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
         ){
             Box(
                 modifier = Modifier
@@ -114,7 +116,8 @@ fun PalletFunc (
             }
         }
         Row(
-
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
         ){
             Box(
                 modifier = Modifier
