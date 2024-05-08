@@ -48,7 +48,7 @@ fun MainMenuScreen(
             .align(Alignment.TopCenter)
         ){
             Image(
-                painter = painterResource(R.drawable.ms_testtitle1),
+                painter = painterResource(R.drawable.title_menu),
                 contentDescription = "title",
                         modifier = Modifier
                             .offset(y = 10.dp)
@@ -67,7 +67,7 @@ fun MainMenuScreen(
                         .offset(y = 60.dp)
                 ) {}
                 Image(
-                    painter = painterResource(R.drawable.ms_mainmenubuttons_1),
+                    painter = painterResource(R.drawable.new_menu),
                     contentDescription = "NEW",
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier
@@ -81,7 +81,7 @@ fun MainMenuScreen(
                     .align(Alignment.CenterHorizontally)
             ) {
                 Button(
-                    onClick = {  },//TODO:"LOAD"
+                    onClick = { navController.navigate(route = Screen.loadScreen.route) },//TODO:"LOAD"
                     shape = RectangleShape,
                     colors = ButtonDefaults.buttonColors(Color.Transparent),
                     modifier = Modifier
@@ -89,7 +89,7 @@ fun MainMenuScreen(
                         .offset(y = 100.dp)
                 ) {}
                 Image(
-                    painter = painterResource(R.drawable.ms_mainmenubuttons_2),
+                    painter = painterResource(R.drawable.load_menu),
                     contentDescription = "LOAD",
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier
@@ -111,7 +111,7 @@ fun MainMenuScreen(
                         .offset(y = 140.dp)
                 ) {}
                 Image(
-                    painter = painterResource(R.drawable.ms_mainmenubuttons_3),
+                    painter = painterResource(R.drawable.share_menu),
                     contentDescription = "SHARE",
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier
@@ -133,7 +133,7 @@ fun MainMenuScreen(
                         .offset(y = 180.dp)
                 ) {}
                 Image(
-                    painter = painterResource(R.drawable.ms_mainmenubuttons_4),
+                    painter = painterResource(R.drawable.options_menu),
                     contentDescription = "OPTIONS",
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier
