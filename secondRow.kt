@@ -24,10 +24,10 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.rememberNavController
 import com.example.mspaint.R
 import com.example.mspaint.tools.eraser
 import com.example.mspaint.tools.pencil
+import com.example.mspaint.ui.theme.Grey
 
 @Composable
 fun SecondRow(
@@ -45,7 +45,7 @@ fun SecondRow(
         modifier = Modifier
             .fillMaxWidth()
             .height(100.dp)
-            .background(Color(0xFFc8c8c8))
+            .background(Grey)
             .padding(0.dp)
     ) {
         val reusableModifier = Modifier
@@ -175,6 +175,5 @@ fun SecondRow(
 @Preview
 @Composable
 fun SecondRowPreview() {
-    MainScreen(navController = rememberNavController())
+    MainScreen()
 }
-
